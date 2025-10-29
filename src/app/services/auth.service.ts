@@ -23,6 +23,7 @@ export class AuthService {
       this.token = await res.text()
       localStorage.setItem("token", this.token)
       this.router.navigate([""])
+      this.loggeado = true
     }
     console.log("Respuesta del back", res);
   }

@@ -15,6 +15,11 @@ export class LoginPage {
   authService = inject(AuthService);
   errorLogin = false;
   isLoading = false;
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   async login(form: any) {
     this.errorLogin = false;

@@ -1,39 +1,126 @@
-<div id="container" class="card">
+<div class="login-container">
+  <!-- Background decorations -->
+  <div class="bg-decoration circle-1"></div>
+  <div class="bg-decoration circle-2"></div>
+  <div class="bg-decoration circle-3"></div>
 
-  <h1 class="container-title">Iniciar sesión</h1>
-  
-  <form class="data-picker" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-  
-    <div>
-      <label for="email">Correo electrónico</label>
-      <input class="input-box" id="email" name="email" type="email" ngModel #email="ngModel" required="true"
-        autocomplete="email">
-      @if (email.invalid && !email.pristine) {
-      <p class="error">Debe colocar un correo electrónico.</p>
-      }
+  <!-- Login Card -->
+  <div class="login-card card shadow-lg border-0">
+
+    <div class="brand-section text-center mb-4">
+
+    <img src="/Logo_TP_FINAL.png" width="150px">
+
+      <h1 class="brand-title mb-2">Bienvenido de nuevo</h1>
+      <p class="brand-subtitle text-muted">Inicia sesión en tu cuenta</p>
     </div>
-  
-    <div>
-      <label for="password">Contraseña</label>
-      <input class="input-box" id="password" name="password" type="password" ngModel #password="ngModel" minlength="4"
-        autocomplete="current-password">
-      @if (password.invalid && !password.pristine) {
-      <p class="error">Debe colocar una contraseña de al menos 4 caracteres.</p>
+
+    <!-- Login Form -->
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <!-- Email Input -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Correo electrónico</label>
+        <div class="input-group input-group-custom">
+          <span class="input-group-text bg-transparent border-end-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
+              <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+              <path
+                d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+            </svg>
+          </span>
+          <input type="email" class="form-control border-start-0" id="email" name="email" placeholder="tu@email.com"
+            ngModel #email="ngModel" required autocomplete="email" />
+        </div>
+        @if (email.invalid && !email.pristine) {
+        <div class="text-danger small mt-1">
+          <i class="bi bi-exclamation-circle"></i> Debe colocar un correo electrónico válido.
+        </div>
+        }
+      </div>
+
+      <!-- Password Input -->
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Contraseña</label>
+        <div class="input-group input-group-custom">
+          <span class="input-group-text bg-transparent border-end-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
+              <path fill-rule="evenodd"
+                d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z"
+                clip-rule="evenodd" />
+            </svg>
+          </span>
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0 border-end-0"
+            id="password" name="password" placeholder="••••••••" ngModel #password="ngModel" minlength="4" required
+            autocomplete="current-password" />
+          <button type="button" class="btn border border-start-0 bg-transparent toggle-password-btn"
+            (click)="togglePasswordVisibility()">
+            @if (showPassword) {
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
+              <path
+                d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
+              <path
+                d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
+              <path
+                d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
+            </svg>
+            } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
+              <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+              <path fill-rule="evenodd"
+                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
+                clip-rule="evenodd" />
+            </svg>
+            }
+          </button>
+        </div>
+        @if (password.invalid && !password.pristine) {
+        <div class="text-danger small mt-1">
+          <i class="bi bi-exclamation-circle"></i> Debe colocar una contraseña de al menos 4 caracteres.
+        </div>
+        }
+      </div>
+
+      <!-- Forgot Password Link -->
+      <div class="text-end mb-4">
+        <a href="#" class="forgot-password-link small">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <!-- Error Message -->
+      @if (errorLogin) {
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="me-2"
+          style="width: 20px; height: 20px;">
+          <path fill-rule="evenodd"
+            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+            clip-rule="evenodd" />
+        </svg>
+        <div>Datos de sesión incorrectos, intente nuevamente.</div>
+      </div>
       }
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-gradient w-100 py-3 mb-3 fw-bold text-uppercase" [disabled]="isLoading">
+        @if (isLoading) {
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        Cargando...
+        } @else {
+        <span>Iniciar sesión</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ms-2"
+          style="width: 20px; height: 20px; display: inline-block;">
+          <path fill-rule="evenodd"
+            d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+            clip-rule="evenodd" />
+        </svg>
+        }
+      </button>
+    </form>
+
+    <!-- Register Link -->
+    <div class="footer-link text-center pt-3 border-top">
+      <p class="text-muted mb-0">
+        ¿No tenés cuenta?
+        <a routerLink="/register" class="register-link fw-semibold ms-1">Registrate</a>
+      </p>
     </div>
-    
-    
-    <button class="button-box">Iniciar sesión</button>
-
-    @if (isLoading){
-    <app-spinner class="spinner"></app-spinner>}
-    @if (errorLogin) {
-    <p class="error">Datos de sesión incorrectos, intente nuevamente.</p>
-    }
-    
-    <p class="create-acc">No tenés cuenta? <a routerLink="/register">Registrate</a></p>
-  
-  </form>
-
-
+  </div>
 </div>

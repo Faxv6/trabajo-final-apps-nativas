@@ -1,66 +1,61 @@
 <div class="home-container">
-  <!-- Navbar Superior - Condicional según login -->
   <nav class="navbar-top" [class.logged-in]="isLoggedIn">
     <div class="container-fluid">
-      <!-- Logo/Marca Propia -->
       <div class="brand-logo">
-        <span class="brand-text">Marca Propia</span>
+        <span class="brand-text">RaZan</span>
       </div>
 
-      <!-- Navbar para usuario NO logueado -->
-      <div class="navbar-actions" *ngIf="!isLoggedIn">
-        <span class="navbar-info">Nav bar usuario no loggeado</span>
-        <button class="btn btn-primary mx-2">Iniciar sesión</button>
-        <button class="btn btn-outline-light">Registrarse</button>
+      @if (!isLoggedIn) {
+      <div class="navbar-actions">
+        <span class="navbar-info">No loggeado</span>
+        <button class="btn btn-primary mx-2" routerLink="/login">Iniciar sesión</button>
+        <button class="btn btn-outline-light" routerLink="register">Registrarse</button>
       </div>
+      }
 
-      <!-- Navbar para usuario logueado -->
-      <div class="navbar-actions" *ngIf="isLoggedIn">
-        <span class="navbar-info">Nav bar usuario loggeado</span>
+      @if (isLoggedIn) {
+      <div class="navbar-actions">
+        <span class="navbar-info">Loggeado</span>
         <button class="btn btn-danger">Cerrar sesión</button>
       </div>
+      }
     </div>
   </nav>
 
-  <!-- Contenido Principal Scrolleable -->
   <main class="main-content">
     <div class="content-wrapper">
-      <!-- Sección de Carousel de Restaurantes -->
       <section class="carousel-section">
         <div class="carousel-container">
           <div class="carousel-track">
-            <div class="carousel-item" *ngFor="let restaurant of featuredRestaurants; let i = index"
-                 [class.active]="i === currentCarouselIndex">
-              <div class="restaurant-card-carousel">
-                <img [src]="restaurant.image" [alt]="restaurant.name" class="restaurant-img">
-              </div>
+            @for (restaurant of featuredRestaurants; track restaurant.id; let i = $index) {
+            <div class="carousel-item" [class.active]="i === currentCarouselIndex">
             </div>
+            }
           </div>
           <button class="carousel-btn prev" (click)="prevSlide()">‹</button>
           <button class="carousel-btn next" (click)="nextSlide()">›</button>
         </div>
-        
-        <!-- Indicador de carousel -->
-        <div class="carousel-label">
-          <span>( carrousel )</span>
-        </div>
       </section>
 
       <!-- Panel lateral derecho - Solo visible cuando está logueado -->
-      <aside class="restaurant-info-panel" *ngIf="isLoggedIn">
+      @if (isLoggedIn) {
+      <aside class="restaurant-info-panel">
         <div class="info-content">
           <h3>Restaurante información</h3>
           <p class="info-subtitle">Aca editar info de mi restaurant</p>
         </div>
       </aside>
+      }
 
       <!-- Sección Destacados -->
       <section class="featured-section">
         <h2 class="section-title">Destacados</h2>
         <div class="categories-grid">
-          <div class="category-item" *ngFor="let category of categories">
+          @for (category of categories; track category.id) {
+          <div class="category-item">
             <span>{{ category.name }}</span>
           </div>
+          }
         </div>
       </section>
 
@@ -70,10 +65,9 @@
         <div class="menu-item">
           <span>Comida</span>
         </div>
-        
+
         <!-- Scroll para abajo indicator -->
         <div class="scroll-indicator">
-          <span>(scroll para abajo)</span>
           <div class="scroll-arrow">↓</div>
         </div>
       </section>
