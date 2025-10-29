@@ -1,1 +1,167 @@
-<p>home works!</p>
+<div class="home-container">
+  <!-- Fixed Navbar usando Bootstrap -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">Mi App</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Restaurantes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Perfil</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Scrollable Content -->
+  <main class="main-content">
+    <!-- Welcome Section -->
+    <section class="welcome-section bg-gradient text-white text-center py-5 rounded-3 mb-4">
+      <div class="container">
+        <h2 class="display-4 fw-bold mb-3">Bienvenido</h2>
+        <p class="lead">Descubre los mejores restaurantes y productos</p>
+      </div>
+    </section>
+
+    <!-- Restaurantes Destacados -->
+    <section class="mb-5">
+      <div class="container">
+        <h3 class="mb-4 fw-bold text-dark">Restaurantes Destacados</h3>
+        <div class="row g-4">
+          <!-- Aquí irán los restaurant-card components -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Restaurante 1</h5>
+                <p class="card-text text-muted">Descripción del restaurante</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Restaurante 2</h5>
+                <p class="card-text text-muted">Descripción del restaurante</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Restaurante 3</h5>
+                <p class="card-text text-muted">Descripción del restaurante</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Restaurante 4</h5>
+                <p class="card-text text-muted">Descripción del restaurante</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Productos Populares -->
+    <section class="mb-5">
+      <div class="container">
+        <h3 class="mb-4 fw-bold text-dark">Productos Populares</h3>
+        <div class="row g-4">
+          <!-- Aquí irán los product-card components -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Producto 1</h5>
+                <p class="card-text text-muted">$99.99</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Producto 2</h5>
+                <p class="card-text text-muted">$79.99</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Producto 3</h5>
+                <p class="card-text text-muted">$89.99</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Producto 4</h5>
+                <p class="card-text text-muted">$109.99</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categorías -->
+    <section class="mb-5">
+      <div class="container">
+        <h3 class="mb-4 fw-bold text-dark">Categorías</h3>
+        <div class="row g-4">
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Categoría 1</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Categoría 2</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Categoría 3</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm card-hover">
+              <div class="card-body text-center">
+                <h5 class="card-title">Categoría 4</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
