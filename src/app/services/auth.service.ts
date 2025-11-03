@@ -1,37 +1,64 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { loginData } from '../interface/auth';
 
+/**
+ * Este service se encarga del login, de tener el token y de deslogear
+ * Siempre que se necesite el token hay que llamar a getToken().
+ */
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 
 export class AuthService {
   loggeado: boolean = false;
-  router = inject(Router)
+  router = inject(Router);
   token: null | string = localStorage.getItem("token");
 
-  async login(loginData: loginData) {
-    this.loggeado = true;
-    const res = await fetch("https://restaurant-api.somee.com/api/Authentication/login", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(loginData)
-    })
+  async login(loginData: any) {
+    const res = await fetch("https://restaurant-api.somee.com/api/Authentication/login",
+      {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginData)
+      }
+    );
+
+console.log("AAAAAAAAAAAAAAA")
 
     if (res.ok) {
-      this.token = await res.text()
-      localStorage.setItem("token", this.token)
       this.router.navigate([""])
-      this.loggeado = true
+      this.token = await res.text();
+      localStorage.setItem("token", this.token);
     }
-    console.log("Respuesta del back", res);
   }
 
   logout() {
-    this.token = null
-    localStorage.removeItem("token")
-    this.router.navigate(["/login"])
+    localStorage.clear()
+    this.token = null;
+    this.router.navigate(["/login"]);
   }
 
+  getToken() {
+    return this.token;
+  }
+
+  /**Revisa el token cada 10 mins */
+  revisionToken() {
+    return setInterval(() => {
+      if (this.token) {
+        const base64Url = this.token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        const claims: { exp: number } = JSON.parse(jsonPayload);
+        if (new Date(claims.exp * 1000) < new Date()) {
+          this.logout()
+        }
+      }
+    }, 600)
+  }
 }
+
+

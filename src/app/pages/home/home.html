@@ -1,76 +1,98 @@
 <div class="home-container">
-  <nav class="navbar-top" [class.logged-in]="isLoggedIn">
-    <div class="container-fluid">
-      <div class="brand-logo">
-        <span class="brand-text">RaZan</span>
-      </div>
+  <!-- Navbar minimalista -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm navbar-custom" [class.logged-in]="isLoggedIn">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4 brand-text" href="#">Tap Table</a>
 
       @if (!isLoggedIn) {
-      <div class="navbar-actions">
-        <span class="navbar-info">No loggeado</span>
-        <button class="btn btn-primary mx-2" routerLink="/login">Iniciar sesión</button>
-        <button class="btn btn-outline-light" routerLink="register">Registrarse</button>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary btn-sm" routerLink="/login">Iniciar sesión</button>
+        <button class="btn btn-outline-danger btn-sm" routerLink="/register">Registrarse</button>
       </div>
       }
 
       @if (isLoggedIn) {
-      <div class="navbar-actions">
-        <span class="navbar-info">Loggeado</span>
-        <button class="btn btn-danger">Cerrar sesión</button>
+      <div class="d-flex gap-3 align-items-center">
+        <span class="text-dark fw-medium small">Usuario</span>
+        <button class="btn btn-outline-danger btn-sm">Cerrar sesión</button>
       </div>
       }
     </div>
   </nav>
 
+  <!-- Contenido principal -->
   <main class="main-content">
-    <div class="content-wrapper">
-      <section class="carousel-section">
-        <div class="carousel-container">
-          <div class="carousel-track">
+    <div class="container py-5">
+      
+      <!-- Carousel simple -->
+      <section class="mb-5">
+        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Restaurantes destacados</h2>
+        <div class="carousel-container position-relative bg-light rounded">
+          <div class="carousel-track d-flex">
             @for (restaurant of featuredRestaurants; track restaurant.id; let i = $index) {
-            <div class="carousel-item" [class.active]="i === currentCarouselIndex">
+            <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex" [class.d-none]="i !== currentCarouselIndex">
+              <div class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
+                <span>Restaurante {{ i + 1 }}</span>
+              </div>
             </div>
             }
           </div>
-          <button class="carousel-btn prev" (click)="prevSlide()">‹</button>
-          <button class="carousel-btn next" (click)="nextSlide()">›</button>
+          <button class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm" (click)="prevSlide()">‹</button>
+          <button class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 end-0 translate-middle-y me-3 shadow-sm" (click)="nextSlide()">›</button>
         </div>
       </section>
 
-      <!-- Panel lateral derecho - Solo visible cuando está logueado -->
-      @if (isLoggedIn) {
-      <aside class="restaurant-info-panel">
-        <div class="info-content">
-          <h3>Restaurante información</h3>
-          <p class="info-subtitle">Aca editar info de mi restaurant</p>
-        </div>
-      </aside>
-      }
-
-      <!-- Sección Destacados -->
-      <section class="featured-section">
-        <h2 class="section-title">Destacados</h2>
-        <div class="categories-grid">
+      <!-- Categorías -->
+      <section class="mb-5">
+        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Categorías</h2>
+        <div class="row g-3">
           @for (category of categories; track category.id) {
-          <div class="category-item">
-            <span>{{ category.name }}</span>
+          <div class="col-md-4 col-sm-6">
+            <div class="card border-warning border-2 text-center category-card">
+              <div class="card-body py-4">
+                <span class="fw-medium">{{ category.name }}</span>
+              </div>
+            </div>
           </div>
           }
         </div>
       </section>
 
-      <!-- Sección Menú -->
-      <section class="menu-section">
-        <h2 class="section-title">Menú</h2>
-        <div class="menu-item">
-          <span>Comida</span>
-        </div>
-
-        <!-- Scroll para abajo indicator -->
-        <div class="scroll-indicator">
-          <div class="scroll-arrow">↓</div>
+      <!-- Menú -->
+      <section class="mb-5">
+        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Menú del día</h2>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-danger border-2 text-center menu-card">
+              <div class="card-body py-4">
+                <span class="fw-medium fs-5">Pizzas</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-danger border-2 text-center menu-card">
+              <div class="card-body py-4">
+                <span class="fw-medium fs-5">Hamburguesas</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-danger border-2 text-center menu-card">
+              <div class="card-body py-4">
+                <span class="fw-medium fs-5">Pastas</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-danger border-2 text-center menu-card">
+              <div class="card-body py-4">
+                <span class="fw-medium fs-5">Ensaladas</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
     </div>
   </main>
 </div>
