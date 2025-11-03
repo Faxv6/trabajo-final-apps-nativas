@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { User } from '../interfaces/user';
+import { NewUser } from '../interfaces/users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  async register(registerData: User) {
-    return await fetch("https://restaurant-api.somee.com/api/users", {
+  readonly URL_BASE = "/api/";
+
+
+  async register(registerData: NewUser) {
+    return await fetch(this.URL_BASE + "users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerData)
     }
     );
   }
-}
+} 

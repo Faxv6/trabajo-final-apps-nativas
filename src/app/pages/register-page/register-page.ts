@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { UserService } from '../../services/users-services';
+import { UserService } from '../../services/users-service';
 
 
 @Component({
@@ -23,7 +23,16 @@ export class RegisterPage {
       return
     }
     this.isLoading = true;
-    const res = await this.user.register(form);
+    
+    // Preparar datos sin password2
+    const registerData = {
+      email: form.email,
+      password: form.password,
+      firstName: form.firstName,
+      lastName: form.lastName
+    };
+    
+    const res = await this.user.register(registerData);
     if (res.ok) {
       this.router.navigate(["/login"])
     }

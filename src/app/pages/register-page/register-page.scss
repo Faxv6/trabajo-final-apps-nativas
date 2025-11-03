@@ -1,4 +1,15 @@
-// McDonald's Color Palette
+/*
+  Referencias de estilos utilizados:
+  - Bootstrap 5.3 Forms & Input groups:
+    https://getbootstrap.com/docs/5.3/forms/overview/
+    https://getbootstrap.com/docs/5.3/forms/input-group/
+  - Bootstrap 5.3 Utilities (colors, spacing, shadows):
+    https://getbootstrap.com/docs/5.3/utilities/overview/
+    https://getbootstrap.com/docs/5.3/utilities/spacing/
+    https://getbootstrap.com/docs/5.3/utilities/shadows/
+  - Paleta de colores inspirada en McDonald's:
+    https://brandpalettes.com/mcdonalds-colors/
+*/
 $mcdonalds-red: #DA291C;
 $mcdonalds-yellow: #FFC72C;
 $mcdonalds-dark: #27251F;
@@ -8,66 +19,10 @@ $mcdonalds-dark: #27251F;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, $mcdonalds-red 0%, darken($mcdonalds-red, 10%) 100%);
+  background: #f8f9fa;
   padding: 2rem 1rem;
-  position: relative;
-  overflow: hidden;
 }
 
-// Background Decorations
-.bg-decoration {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  
-  &.circle-1 {
-    width: 400px;
-    height: 400px;
-    background: $mcdonalds-yellow;
-    top: -200px;
-    right: -100px;
-    animation: float 20s infinite ease-in-out;
-  }
-  
-  &.circle-2 {
-    width: 300px;
-    height: 300px;
-    background: $mcdonalds-yellow;
-    bottom: -150px;
-    left: -50px;
-    animation: float 15s infinite ease-in-out reverse;
-  }
-  
-  &.circle-3 {
-    width: 200px;
-    height: 200px;
-    background: $mcdonalds-yellow;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 10s infinite ease-in-out;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-30px) rotate(10deg);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.1;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.15;
-  }
-}
 
 // Register Card
 .register-card {
@@ -85,6 +40,7 @@ $mcdonalds-dark: #27251F;
       opacity: 0;
       transform: translateY(30px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -223,7 +179,7 @@ $mcdonalds-dark: #27251F;
   .login-link {
     color: $mcdonalds-red;
     text-decoration: none;
-    
+
     &:hover {
       color: darken($mcdonalds-red, 10%);
       text-decoration: underline;
@@ -311,60 +267,6 @@ $mcdonalds-dark: #27251F;
   }
 }
 
-// Background Decorations
-.bg-decoration {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  
-  &.circle-1 {
-    width: 400px;
-    height: 400px;
-    background: white;
-    top: -200px;
-    right: -100px;
-    animation: float 20s infinite ease-in-out;
-  }
-  
-  &.circle-2 {
-    width: 300px;
-    height: 300px;
-    background: white;
-    bottom: -150px;
-    left: -50px;
-    animation: float 15s infinite ease-in-out reverse;
-  }
-  
-  &.circle-3 {
-    width: 200px;
-    height: 200px;
-    background: white;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 10s infinite ease-in-out;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-30px) rotate(10deg);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.1;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.15;
-  }
-}
 
 // Register Card
 .register-card {
@@ -383,6 +285,7 @@ $mcdonalds-dark: #27251F;
       opacity: 0;
       transform: translateY(30px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -399,7 +302,7 @@ $mcdonalds-dark: #27251F;
     width: 64px;
     height: 64px;
     margin: 0 auto 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, $mcdonalds-yellow 0%, $mcdonalds-red 100%);
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -418,7 +321,7 @@ $mcdonalds-dark: #27251F;
     font-weight: 800;
     color: #2d3748;
     margin: 0 0 0.5rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, $mcdonalds-yellow 0%, $mcdonalds-red 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -461,18 +364,18 @@ $mcdonalds-dark: #27251F;
     }
 
     &:hover {
-      border-color: #667eea;
+      border-color: $mcdonalds-red;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
 
       svg {
-        color: #667eea;
+        color: $mcdonalds-yellow;
       }
     }
 
     &.active {
       border-color: #667eea;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, $mcdonalds-yellow 0%, $mcdonalds-red 100%);
       color: white;
       box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 
@@ -530,7 +433,7 @@ $mcdonalds-dark: #27251F;
         border-color: #667eea;
         box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 
-        & ~ .input-icon {
+        &~.input-icon {
           color: #667eea;
         }
       }

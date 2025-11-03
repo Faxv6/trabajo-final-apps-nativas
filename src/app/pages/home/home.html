@@ -1,6 +1,18 @@
+<!--
+  Referencias de estructura y estilos:
+  - Bootstrap 5.3 Navbar: https://getbootstrap.com/docs/5.3/components/navbar/
+  - Bootstrap 5.3 Grid system: https://getbootstrap.com/docs/5.3/layout/grid/
+  - Bootstrap 5.3 Cards: https://getbootstrap.com/docs/5.3/components/card/
+  - Bootstrap 5.3 Buttons: https://getbootstrap.com/docs/5.3/components/buttons/
+  - Bootstrap 5.3 Utilities (spacing, borders, shadows):
+    https://getbootstrap.com/docs/5.3/utilities/spacing/
+    https://getbootstrap.com/docs/5.3/utilities/borders/
+    https://getbootstrap.com/docs/5.3/utilities/shadows/
+  - Angular Control Flow (@if / @for): https://angular.dev/guide/templates/control-flow
+-->
 <div class="home-container">
-  <!-- Navbar minimalista -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm navbar-custom" [class.logged-in]="isLoggedIn">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm navbar-custom"
+    [class.logged-in]="isLoggedIn">
     <div class="container">
       <a class="navbar-brand fw-bold fs-4 brand-text" href="#">Tap Table</a>
 
@@ -20,29 +32,32 @@
     </div>
   </nav>
 
-  <!-- Contenido principal -->
   <main class="main-content">
     <div class="container py-5">
-      
-      <!-- Carousel simple -->
       <section class="mb-5">
-        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Restaurantes destacados</h2>
+        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Restaurantes destacados
+        </h2>
         <div class="carousel-container position-relative bg-light rounded">
           <div class="carousel-track d-flex">
             @for (restaurant of featuredRestaurants; track restaurant.id; let i = $index) {
-            <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex" [class.d-none]="i !== currentCarouselIndex">
-              <div class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
+            <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex"
+              [class.d-none]="i !== currentCarouselIndex">
+              <div
+                class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
                 <span>Restaurante {{ i + 1 }}</span>
               </div>
             </div>
             }
           </div>
-          <button class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm" (click)="prevSlide()">‹</button>
-          <button class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 end-0 translate-middle-y me-3 shadow-sm" (click)="nextSlide()">›</button>
+          <button
+            class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm"
+            (click)="prevSlide()">‹</button>
+          <button
+            class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 end-0 translate-middle-y me-3 shadow-sm"
+            (click)="nextSlide()">›</button>
         </div>
       </section>
 
-      <!-- Categorías -->
       <section class="mb-5">
         <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Categorías</h2>
         <div class="row g-3">

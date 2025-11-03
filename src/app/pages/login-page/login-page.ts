@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth-service';
 import { FormsModule } from '@angular/forms';
-import { Spinner } from '../../components/spinner/spinner';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
-  imports: [RouterModule, FormsModule, Spinner],
+  imports: [RouterModule, FormsModule],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
 })
@@ -16,6 +15,8 @@ export class LoginPage {
   errorLogin = false;
   isLoading = false;
   showPassword = false;
+
+  router = inject(Router)
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

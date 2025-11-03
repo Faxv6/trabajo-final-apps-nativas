@@ -13,6 +13,7 @@ export class AuthService {
   loggeado: boolean = false;
   router = inject(Router);
   token: null | string = localStorage.getItem("token");
+  readonly URL_BASE = "https://restaurant-api.somee.com/api/";
 
   async login(loginData: any) {
     const res = await fetch("https://restaurant-api.somee.com/api/Authentication/login",
@@ -22,9 +23,6 @@ export class AuthService {
         body: JSON.stringify(loginData)
       }
     );
-
-console.log("AAAAAAAAAAAAAAA")
-
     if (res.ok) {
       this.router.navigate([""])
       this.token = await res.text();
