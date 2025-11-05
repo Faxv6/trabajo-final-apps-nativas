@@ -12,21 +12,37 @@ export class RestaurantService {
   authService = inject(AuthService);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  readonly URL_BASE = "https://restaurant-api.somee.com/api/";
+  readonly URL_BASE = "https://w370351.ferozo.com/api/users ";
 
-  contacts: Users[] = []
+  restaurants: Users[] = []
 
-  /** Obtiene los contactos del backend */
-  async getRestaurants() {
-    const res = await fetch(this.URL_BASE,
-      {
-        headers: {
-          Authorization: "Bearer " + this.authService.token,
+  /** Obtiene los restaurants del backend y devuelve el array (también guarda en this.restaurants)
+   *  Retorna [] en caso de error o si la respuesta no es ok.
+   */
+  async getRestaurants(): Promise<Users[]> {
+    try {
+      const res = await fetch(this.URL_BASE,
+        {
+          headers: {
+            Authorization: "Bearer " + this.authService.token,
+          }
         }
+      );
+
+      if (!res.ok) {
+        console.error('Error fetching restaurants', res.status, await res.text());
+        this.restaurants = [];
+        return [];
       }
-    )
-    const resJson: Users[] = await res.json()
-    this.contacts = resJson;
+
+      const resJson: Users[] = await res.json();
+      this.restaurants = resJson || [];
+      return this.restaurants;
+    } catch (err) {
+      console.error('getRestaurants failed', err);
+      this.restaurants = [];
+      return [];
+    }
   }
 
   /** Devuelve un contato en particular segun su ID */

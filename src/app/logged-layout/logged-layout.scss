@@ -1,0 +1,23 @@
+/* Minimal styles for the logged layout navbar
+	 - Keeps main content clear of the fixed-top navbar
+	 - Uses Bootstrap utilities for colors; modify variables globally if you want McDonald's palette injected project-wide
+*/
+
+.main-container {
+	padding-top: 72px; /* space for fixed navbar */
+}
+
+.navbar-brand img {
+	border-radius: 6px;
+}
+
+/* Small responsive tweaks */
+@media (max-width: 576px) {
+	.main-container { padding-top: 64px; }
+	.navbar-brand .fw-semibold { display: none; }
+}
+
+.btn-outline-danger {
+	border-color: rgba(218,41,28,0.15);
+}
+

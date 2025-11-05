@@ -10,104 +10,85 @@
     https://getbootstrap.com/docs/5.3/utilities/shadows/
   - Angular Control Flow (@if / @for): https://angular.dev/guide/templates/control-flow
 -->
-<div class="home-container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm navbar-custom"
-    [class.logged-in]="isLoggedIn">
-    <div class="container">
-      <a class="navbar-brand fw-bold fs-4 brand-text" href="#">Tap Table</a>
 
-      @if (!isLoggedIn) {
-      <div class="d-flex gap-2">
-        <button class="btn btn-primary btn-sm" routerLink="/login">Iniciar sesión</button>
-        <button class="btn btn-outline-danger btn-sm" routerLink="/register">Registrarse</button>
-      </div>
-      }
-
-      @if (isLoggedIn) {
-      <div class="d-flex gap-3 align-items-center">
-        <span class="text-dark fw-medium small">Usuario</span>
-        <button class="btn btn-outline-danger btn-sm">Cerrar sesión</button>
-      </div>
-      }
-    </div>
-  </nav>
-
-  <main class="main-content">
-    <div class="container py-5">
-      <section class="mb-5">
-        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Restaurantes destacados
-        </h2>
-        <div class="carousel-container position-relative bg-light rounded">
-          <div class="carousel-track d-flex">
-            @for (restaurant of featuredRestaurants; track restaurant.id; let i = $index) {
-            <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex"
-              [class.d-none]="i !== currentCarouselIndex">
-              <div
-                class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
-                <span>Restaurante {{ i + 1 }}</span>
-              </div>
-            </div>
-            }
-          </div>
-          <button
-            class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm"
-            (click)="prevSlide()">‹</button>
-          <button
-            class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 end-0 translate-middle-y me-3 shadow-sm"
-            (click)="nextSlide()">›</button>
-        </div>
-      </section>
-
-      <section class="mb-5">
-        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Categorías</h2>
-        <div class="row g-3">
-          @for (category of categories; track category.id) {
-          <div class="col-md-4 col-sm-6">
-            <div class="card border-warning border-2 text-center category-card">
-              <div class="card-body py-4">
-                <span class="fw-medium">{{ category.name }}</span>
-              </div>
+<main class="main-content">
+  <div class="container py-5">
+    <section class="mb-5">
+      <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Restaurantes destacados
+      </h2>
+      <div class="carousel-container position-relative bg-light rounded">
+        <div class="carousel-track d-flex">
+          @for (restaurant of this.restaurantService.restaurants; track restaurant.id; let i = $index) {
+          <a routerLink="/"{{restaurant.restaurantName}}></a> <!--seguir acá-->
+          <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex"
+            [class.d-none]="i !== currentCarouselIndex">
+            <div
+              class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
+              <span>{{restaurant.restaurantName}}</span>
             </div>
           </div>
           }
         </div>
-      </section>
 
-      <!-- Menú -->
-      <section class="mb-5">
-        <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Menú del día</h2>
-        <div class="row g-3">
-          <div class="col-md-6 col-lg-3">
-            <div class="card border-danger border-2 text-center menu-card">
-              <div class="card-body py-4">
-                <span class="fw-medium fs-5">Pizzas</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="card border-danger border-2 text-center menu-card">
-              <div class="card-body py-4">
-                <span class="fw-medium fs-5">Hamburguesas</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="card border-danger border-2 text-center menu-card">
-              <div class="card-body py-4">
-                <span class="fw-medium fs-5">Pastas</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="card border-danger border-2 text-center menu-card">
-              <div class="card-body py-4">
-                <span class="fw-medium fs-5">Ensaladas</span>
-              </div>
+
+        <button
+          class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm"
+          (click)="prevSlide()">‹</button>
+        <button
+          class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 end-0 translate-middle-y me-3 shadow-sm"
+          (click)="nextSlide()">›</button>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Categorías</h2>
+      <div class="row g-3">
+        @for (category of categories; track category.id) {
+        <div class="col-md-4 col-sm-6">
+          <div class="card border-warning border-2 text-center category-card">
+            <div class="card-body py-4">
+              <span class="fw-medium">{{ category.name }}</span>
             </div>
           </div>
         </div>
-      </section>
+        }
+      </div>
+    </section>
 
-    </div>
-  </main>
-</div>
+    <!-- Menú -->
+    <section class="mb-5">
+      <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Menú del día</h2>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-3">
+          <div class="card border-danger border-2 text-center menu-card">
+            <div class="card-body py-4">
+              <span class="fw-medium fs-5">Pizzas</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card border-danger border-2 text-center menu-card">
+            <div class="card-body py-4">
+              <span class="fw-medium fs-5">Hamburguesas</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card border-danger border-2 text-center menu-card">
+            <div class="card-body py-4">
+              <span class="fw-medium fs-5">Pastas</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card border-danger border-2 text-center menu-card">
+            <div class="card-body py-4">
+              <span class="fw-medium fs-5">Ensaladas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>

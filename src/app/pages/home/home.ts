@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from "@angular/router";
+import { RestaurantService } from '../../services/restaurant-service';
+import { User } from '../../models';
+import { Users } from '../../interfaces/users';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
-  
-  isLoggedIn = false; 
+export class Home implements OnInit {
+  restaurantService = inject(RestaurantService)
+  isLoggedIn = false;
 
-  featuredRestaurants = [
-    { id: 1, name: 'Restaurante 1' },
-    { id: 2, name: 'Restaurante 2' },
-    { id: 3, name: 'Restaurante 3' }
-  ];
+  ngOnInit(): void {
+    this.restaurantService.getRestaurants();
+  }
 
   currentCarouselIndex = 0;
 
@@ -27,12 +28,14 @@ export class Home {
   ];
 
   nextSlide() {
-    this.currentCarouselIndex = (this.currentCarouselIndex + 1) % this.featuredRestaurants.length;
+    this.currentCarouselIndex = (this.currentCarouselIndex + 1) % this.restaurantService.restaurants.length;
   }
 
   prevSlide() {
     this.currentCarouselIndex = this.currentCarouselIndex === 0
-      ? this.featuredRestaurants.length - 1
+      ? this.restaurantService.restaurants.length - 1
       : this.currentCarouselIndex - 1;
   }
+
+  // Los restaurantes se consultan directamente desde restaurantService.restaurants
 }

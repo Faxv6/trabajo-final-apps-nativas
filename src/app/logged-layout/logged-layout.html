@@ -1,0 +1,24 @@
+<div class="home-container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm navbar-custom"
+        [class.logged-in]="isLoggedIn">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 brand-text" href="#">Tap Table</a>
+
+            @if (!isLoggedIn) {
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary btn-sm" routerLink="/login">Iniciar sesión</button>
+                <button class="btn btn-outline-danger btn-sm" routerLink="/register">Registrá tu restaurante</button>
+            </div>
+            }@else {
+            <div class="d-flex gap-3 align-items-center">
+                <span class="text-dark fw-medium small">Usuario</span>
+                <button class="btn btn-outline-danger btn-sm" (onClick)="logout()">Cerrar sesión</button>
+            </div>
+            }
+        </div>
+    </nav>
+
+
+    <main class="main-container container-fluid">
+        <router-outlet />
+    </main>

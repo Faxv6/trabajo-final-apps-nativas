@@ -18,25 +18,39 @@ export class RegisterPage {
 
   async register(form: any) {
     this.errorRegister = false;
-    if (!form.email || !form.password || !form.password2 || !form.firstName || !form.lastName || form.password !== form.password2) {
+    
+    // Validar que todos los campos requeridos estén presentes
+    if (!form.firstName || !form.lastName || !form.restaurantName || 
+        !form.address || !form.phoneNumber || !form.password || !form.password2) {
       this.errorRegister = true;
-      return
+      return;
     }
+    
+    // Validar que las contraseñas coincidan
+    if (form.password !== form.password2) {
+      this.errorRegister = true;
+      return;
+    }
+    
     this.isLoading = true;
     
-    // Preparar datos sin password2
-    const registerData = {
-      email: form.email,
-      password: form.password,
+    // Preparar datos sin password2 (solo para validación en el frontend)
+    const userData = {
       firstName: form.firstName,
-      lastName: form.lastName
+      lastName: form.lastName,
+      restaurantName: form.restaurantName,
+      address: form.address,
+      phoneNumber: form.phoneNumber,
+      password: form.password
     };
     
-    const res = await this.user.register(registerData);
-    if (res.ok) {
-      this.router.navigate(["/login"])
-    }
+    const res = await this.user.register(userData);
     this.isLoading = false;
-    this.errorRegister = true;
+    
+    if (res.ok) {
+      this.router.navigate(["/login"]);
+    } else {
+      this.errorRegister = true;
+    }
   }
 }

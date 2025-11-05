@@ -6,10 +6,9 @@ import { AuthService } from './auth-service';
   providedIn: 'root'
 })
 export class CategoriesService {
-  readonly URL_BASE = "https://restaurant-api.somee.com/api/";
+  readonly URL_BASE = "https://w370351.ferozo.com";
   authService = inject(AuthService)
   categories: Category[] = []
-
 
   async getCategory() {
     const res = await fetch(this.URL_BASE,

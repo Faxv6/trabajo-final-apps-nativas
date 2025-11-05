@@ -2,20 +2,42 @@ import { Routes } from '@angular/router';
 import { LoginPage } from './pages/login-page/login-page';
 import { Home } from './pages/home/home';
 import { RegisterPage } from './pages/register-page/register-page';
+import { onlyPublicUserGuard } from './components/guards/only-public-user-guard';
+import { onlyLoggedUserGuard } from './components/guards/only-logged-user-guard';
+import { redirectToHomeLogged } from './components/guards/redirect-to-home-logged';
+import { LoggedLayout } from './logged-layout/logged-layout';
+import { HomeLogged } from './pages/home-logged/home-logged';
 
 export const routes: Routes = [
 
     {
-        path: "",
-        component: Home
-    },
-        {
         path: "login",
-        component: LoginPage
+        component: LoginPage,
+        canActivate: [onlyPublicUserGuard],
     },
-        {
+    {
         path: "register",
-        component: RegisterPage
-    }
+        component: RegisterPage,
+        canActivate: [onlyPublicUserGuard]
+    },
+
+    {
+        path: "",
+        component: Home,
+        canActivate: [redirectToHomeLogged]
+    },
+    {
+        path: "logged-layout",
+        component: LoggedLayout,
+        canActivateChild: [onlyLoggedUserGuard],
+        children: [
+            {
+                path: "",
+                component: Home
+            }
+            
+        ]
+    },
+
 
 ];

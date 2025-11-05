@@ -13,10 +13,10 @@ export class AuthService {
   loggeado: boolean = false;
   router = inject(Router);
   token: null | string = localStorage.getItem("token");
-  readonly URL_BASE = "https://restaurant-api.somee.com/api/";
+  readonly URL_BASE = "https://w370351.ferozo.com";
 
   async login(loginData: any) {
-    const res = await fetch("https://restaurant-api.somee.com/api/Authentication/login",
+    const res = await fetch(this.URL_BASE + "/api/Authentication/login",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -24,7 +24,7 @@ export class AuthService {
       }
     );
     if (res.ok) {
-      this.router.navigate([""])
+      this.router.navigate(["/logged-layout"])
       this.token = await res.text();
       localStorage.setItem("token", this.token);
     }

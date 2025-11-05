@@ -53,7 +53,7 @@ $mcdonalds-dark: #27251F;
   .brand-icon {
     width: 64px;
     height: 64px;
-    background: linear-gradient(135deg, $mcdonalds-red 0%, darken($mcdonalds-red, 15%) 100%);
+    background:yellow;
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -147,7 +147,7 @@ $mcdonalds-dark: #27251F;
 
 // McDonald's Button
 .btn-mcdonalds {
-  background: linear-gradient(135deg, $mcdonalds-red 0%, darken($mcdonalds-red, 10%) 100%);
+  background: yellow;
   border: none;
   border-radius: 12px;
   color: white;
@@ -156,7 +156,7 @@ $mcdonalds-dark: #27251F;
   letter-spacing: 0.5px;
 
   &:hover {
-    background: linear-gradient(135deg, darken($mcdonalds-red, 5%) 0%, darken($mcdonalds-red, 15%) 100%);
+    background: yellow;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba($mcdonalds-red, 0.4);
   }
@@ -181,13 +181,12 @@ $mcdonalds-dark: #27251F;
     text-decoration: none;
 
     &:hover {
-      color: darken($mcdonalds-red, 10%);
+      color: $mcdonalds-red;
       text-decoration: underline;
     }
   }
 }
 
-// Social Divider
 .social-divider {
   position: relative;
   text-align: center;

@@ -1,20 +1,18 @@
 export interface Users {
     id: number;
-    email: string;
+    restaurantName: string;
     password: string;
     firstName: string;
     lastName: string;
-    restaurantName?: string;
-    address?: string;
-    phoneNumber?: string;
+    address: string;
+    phoneNumber: string;
 }
 
 export interface NewUser {
-    email: string;
+    restaurantName: string;
     password: string;
     firstName: string;
     lastName: string;
-    restaurantName?: string;
-    address?: string;
-    phoneNumber?: string;
+    address: string;
+    phoneNumber: string;
 }

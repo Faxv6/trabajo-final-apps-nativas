@@ -19,7 +19,7 @@
 
     <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
       <div class="mb-3">
-        <label for="email" class="form-label fw-semibold">Correo electrónico</label>
+        <label for="email" class="form-label fw-semibold">Nombre del restaurante</label>
         <div class="input-group input-group-custom">
           <span class="input-group-text bg-transparent border-end-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="input-icon">
@@ -28,12 +28,12 @@
                 d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
             </svg>
           </span>
-          <input type="email" class="form-control border-start-0" id="email" name="email" placeholder="tu@email.com"
-            ngModel #email="ngModel" required autocomplete="email" />
+          <input type="restaurantName" class="form-control border-start-0" id="restaurantName" name="restaurantName" placeholder=""
+            ngModel #restaurantName="ngModel" required autocomplete="restaurantName" />
         </div>
-        @if (email.invalid && !email.pristine) {
+        @if (restaurantName.invalid && !restaurantName.pristine) {
         <div class="text-danger small mt-1">
-          <i class="bi bi-exclamation-circle"></i> Debe colocar un correo electrónico válido.
+          <i class="bi bi-exclamation-circle"></i> Debe colocar un nombre válido.
         </div>
         }
       </div>
