@@ -1,18 +1,18 @@
 <div class="home-container">
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom shadow-sm navbar-custom"
-        [class.logged-in]="isLoggedIn">
+        [class.logged-in]="!authService.isLoggedIn()">
         <div class="container">
             <a class="navbar-brand fw-bold fs-4 brand-text" href="#">Tap Table</a>
 
-            @if (!isLoggedIn) {
+            @if (!authService.isLoggedIn()) {
             <div class="d-flex gap-2">
-                <button class="btn btn-primary btn-sm" routerLink="/login">Iniciar sesión</button>
-                <button class="btn btn-outline-danger btn-sm" routerLink="/register">Registrá tu restaurante</button>
+                <a class="btn btn-primary btn-sm" routerLink="/login">Iniciar sesión</a>
+                <a class="btn btn-outline-danger btn-sm" routerLink="/register">Registrá tu restaurante</a>
             </div>
-            }@else {
+            } @else {
             <div class="d-flex gap-3 align-items-center">
-                <span class="text-dark fw-medium small">Usuario</span>
-                <button class="btn btn-outline-danger btn-sm" (onClick)="logout()">Cerrar sesión</button>
+                <span class="text-dark fw-medium small">{{ restaurantService.getRestaurantName() ?? 'Usuario' }}</span>
+                <button class="btn btn-outline-danger btn-sm" (click)="logout()">Cerrar sesión</button>
             </div>
             }
         </div>

@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from "@angular/router";
 import { AuthService } from '../services/auth-service';
+import { RestaurantService } from '../services/restaurant-service';
 
 @Component({
   selector: 'app-logged-layout',
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './logged-layout.html',
   styleUrl: './logged-layout.scss',
 })
 export class LoggedLayout {
-  isLoggedIn = false;
-  private authService = inject(AuthService);
+  authService = inject(AuthService)
+  restaurantService = inject(RestaurantService)
 
-  logout() {
-    this.authService.logout();
-  }
+logout() {
+  this.authService.logout()
+}
 }

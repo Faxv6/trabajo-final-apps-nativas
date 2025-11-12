@@ -13,7 +13,6 @@ import { Users } from '../../interfaces/users';
 })
 export class Home implements OnInit {
   restaurantService = inject(RestaurantService)
-  isLoggedIn = false;
 
   ngOnInit(): void {
     this.restaurantService.getRestaurants();

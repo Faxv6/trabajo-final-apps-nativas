@@ -18,8 +18,7 @@
       </h2>
       <div class="carousel-container position-relative bg-light rounded">
         <div class="carousel-track d-flex">
-          @for (restaurant of this.restaurantService.restaurants; track restaurant.id; let i = $index) {
-          <a routerLink="/"{{restaurant.restaurantName}}></a> <!--seguir acá-->
+          @for (restaurant of restaurantService.restaurants; track restaurant.id; let i = $index) {
           <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex"
             [class.d-none]="i !== currentCarouselIndex">
             <div
@@ -29,7 +28,6 @@
           </div>
           }
         </div>
-
 
         <button
           class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm"

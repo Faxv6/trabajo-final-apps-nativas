@@ -24,7 +24,7 @@ export class AuthService {
       }
     );
     if (res.ok) {
-      this.router.navigate(["/logged-layout"])
+      this.router.navigate([""])
       this.token = await res.text();
       localStorage.setItem("token", this.token);
     }
@@ -38,6 +38,10 @@ export class AuthService {
 
   getToken() {
     return this.token;
+  }
+
+  isLoggedIn() {
+    return !!this.token;
   }
 
   /**Revisa el token cada 10 mins */

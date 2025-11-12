@@ -20,16 +20,9 @@ export const routes: Routes = [
         component: RegisterPage,
         canActivate: [onlyPublicUserGuard]
     },
-
     {
         path: "",
-        component: Home,
-        canActivate: [redirectToHomeLogged]
-    },
-    {
-        path: "logged-layout",
         component: LoggedLayout,
-        canActivateChild: [onlyLoggedUserGuard],
         children: [
             {
                 path: "",
@@ -38,6 +31,4 @@ export const routes: Routes = [
             
         ]
     },
-
-
 ];

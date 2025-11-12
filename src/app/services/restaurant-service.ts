@@ -57,4 +57,52 @@ export class RestaurantService {
     const resRestaurant: Users = await res.json();
     return resRestaurant;
   }
+
+  decodeToken(): Record<string, any> | null {
+    const token = this.authService.token;
+    if (!token) return null;
+
+    try {
+      const parts = token.split('.');
+      if (parts.length < 2) return null;
+      const payload = parts[1];
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+      const json = atob(padded);
+      return JSON.parse(decodeURIComponent(json.split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join('')));
+    } catch (err) {
+      console.error('decodeToken failed', err);
+      return null;
+    }
+  }
+
+  /**
+   * Devuelve las claims (payload) del token actual. Alias de decodeToken para claridad.
+   */
+  getTokenClaims(): Record<string, any> | null {
+    return this.decodeToken();
+  }
+
+  /** Devuelve el id del usuario según las claims del token (sub | id | userId). */
+  getUserId(): string | null {
+    const claims = this.getTokenClaims();
+    if (!claims) return null;
+  return (claims['sub'] ?? claims['id'] ?? claims['userId'] ?? null) as string | null;
+  }
+
+  /** Devuelve el nombre del restaurante / usuario según las claims más comunes. */
+  getRestaurantName(): string | null {
+    const claims = this.getTokenClaims();
+    if (!claims) return null;
+  return (claims['restaurantName'] ?? claims['name'] ?? claims['unique_name'] ?? claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ?? null) as string | null;
+  }
+
+  /** Devuelve la fecha de expiración (exp) como timestamp (segundos) si existe. */
+  getTokenExpiration(): number | null {
+    const claims = this.getTokenClaims();
+    if (!claims) return null;
+  return typeof claims['exp'] === 'number' ? claims['exp'] : (claims['exp'] ? Number(claims['exp']) : null);
+  }
 }
