@@ -1,0 +1,14 @@
+/* Styles for the new/edit category small form */
+.new-edit-category-form {
+  min-width: 260px;
+}
+
+.new-edit-category-form input.form-control {
+  box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .new-edit-category-form {
+    min-width: 100%;
+  }
+}

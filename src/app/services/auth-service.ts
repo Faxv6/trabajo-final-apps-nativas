@@ -24,9 +24,9 @@ export class AuthService {
       }
     );
     if (res.ok) {
-      this.router.navigate([""])
-      this.token = await res.text();
+      this.token = (await res.json()).token as string;
       localStorage.setItem("token", this.token);
+      this.router.navigate([""])
     }
   }
 

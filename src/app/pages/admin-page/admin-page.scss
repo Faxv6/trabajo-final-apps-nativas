@@ -1,0 +1,27 @@
+// Small component tweaks for the restaurant admin card
+.restaurant-admin-card {
+	max-width: 900px;
+	margin: 0.75rem auto;
+	border-radius: 0.6rem;
+}
+
+.restaurant-admin-card .card-body img {
+	object-fit: cover;
+	background-color: #fff7e6; // subtle warm background
+}
+
+.restaurant-admin-card .nav-pills .nav-link {
+	border-radius: 0.5rem;
+}
+
+.restaurant-admin-card .list-group-item {
+	padding-top: 0.65rem;
+	padding-bottom: 0.65rem;
+}
+
+/* small responsive tweak */
+@media (max-width: 576px) {
+	.restaurant-admin-card {
+		margin: 0.5rem;
+	}
+}

@@ -1,10 +1,6 @@
 export interface Category {
-  id: number;
+  id: number|string;
   name: string;
-  description?: string;
-  restaurantId: number;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface CreateCategoryRequest {
@@ -17,3 +13,4 @@ export interface UpdateCategoryRequest {
   name: string;
   description?: string;
 }
+

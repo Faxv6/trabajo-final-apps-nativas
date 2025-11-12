@@ -41,7 +41,7 @@
     <section class="mb-5">
       <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Categorías</h2>
       <div class="row g-3">
-        @for (category of categories; track category.id) {
+        @for (category of categoriesService.categories; track category.id) {
         <div class="col-md-4 col-sm-6">
           <div class="card border-warning border-2 text-center category-card">
             <div class="card-body py-4">

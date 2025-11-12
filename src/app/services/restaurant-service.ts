@@ -89,20 +89,22 @@ export class RestaurantService {
   getUserId(): string | null {
     const claims = this.getTokenClaims();
     if (!claims) return null;
-  return (claims['sub'] ?? claims['id'] ?? claims['userId'] ?? null) as string | null;
+    return (claims['sub'] ?? claims['id'] ?? claims['userId'] ?? null) as string | null;
   }
 
   /** Devuelve el nombre del restaurante / usuario según las claims más comunes. */
   getRestaurantName(): string | null {
     const claims = this.getTokenClaims();
     if (!claims) return null;
-  return (claims['restaurantName'] ?? claims['name'] ?? claims['unique_name'] ?? claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ?? null) as string | null;
+    return (claims['restaurantName'] ?? claims['name'] ?? claims['unique_name'] ?? claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ?? null) as string | null;
+  }
+  async register(registerData: NewUser) {
+    return await fetch("https://w370351.ferozo.com/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(registerData)
+    }
+    );
   }
 
-  /** Devuelve la fecha de expiración (exp) como timestamp (segundos) si existe. */
-  getTokenExpiration(): number | null {
-    const claims = this.getTokenClaims();
-    if (!claims) return null;
-  return typeof claims['exp'] === 'number' ? claims['exp'] : (claims['exp'] ? Number(claims['exp']) : null);
-  }
 }

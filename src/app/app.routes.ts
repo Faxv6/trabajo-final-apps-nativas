@@ -7,6 +7,9 @@ import { onlyLoggedUserGuard } from './components/guards/only-logged-user-guard'
 import { redirectToHomeLogged } from './components/guards/redirect-to-home-logged';
 import { LoggedLayout } from './logged-layout/logged-layout';
 import { HomeLogged } from './pages/home-logged/home-logged';
+import { RestaurantCard } from './components/restaurant-card/restaurant-card';
+import { AdminPage } from './pages/admin-page/admin-page';
+import { NewEditCategory } from './components/new-edit-category/new-edit-category';
 
 export const routes: Routes = [
 
@@ -27,8 +30,19 @@ export const routes: Routes = [
             {
                 path: "",
                 component: Home
+            },
+            {
+                path: "admin-page",
+                component: AdminPage
+            },
+            {
+                path: "new-category",
+                component: NewEditCategory
+            },
+            {
+                path: "edit-category/:id",
+                component: NewEditCategory
             }
-            
         ]
     },
 ];

@@ -1,6 +1,7 @@
 import { inject, Inject, Injectable } from '@angular/core';
-import { Category } from '../interfaces/category';
+import { Category, NewCategory } from '../interfaces/category';
 import { AuthService } from './auth-service';
+import { RestaurantService } from './restaurant-service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,21 +10,32 @@ export class CategoriesService {
   readonly URL_BASE = "https://w370351.ferozo.com";
   authService = inject(AuthService)
   categories: Category[] = []
+  restaurantService = inject(RestaurantService)
 
-  async getCategory() {
-    const res = await fetch(this.URL_BASE,
-      {
-        headers: {
-          Authorization: "Bearer " + this.authService.token,
+  async getCategories() {
+    try {
+      const res = await fetch(this.URL_BASE + "/api/users/" + this.restaurantService.getUserId() + "/categories",
+        {
+          headers: {
+            Authorization: "Bearer " + this.authService.token,
+          }
         }
+      )
+      if (!res.ok) {
+        console.error('Failed to load categories', res.status, res.statusText)
+        this.categories = []
+        return
       }
-    )
-    const resJson: Category[] = await res.json()
-    this.categories = resJson;
+      const resJson: Category[] = await res.json()
+      this.categories = resJson;
+    } catch (err) {
+      console.error('Error fetching categories', err)
+      this.categories = []
+    }
   }
 
-  async createContact(nuevaCategoria: Category) {
-    const res = await fetch(this.URL_BASE,
+  async createCategory(nuevaCategoria: NewCategory) {
+    const res = await fetch(this.URL_BASE + "/api/categories",
       {
         method: "POST",
         headers: {
@@ -61,8 +73,9 @@ export class CategoriesService {
   }
 
   /** Borra una categoria */
-  async deleteContact(id: number) {
-    const res = await fetch(this.URL_BASE + "/" + id,
+  async deleteCategory(id: number | string) {
+    this.categories
+    const res = await fetch(this.URL_BASE + "/api/categories" + "/" + id,
       {
         method: "DELETE",
         headers: {

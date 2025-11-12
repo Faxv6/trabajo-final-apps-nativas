@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { UserService } from '../../services/users-service';
+import { RestaurantService } from '../../services/restaurant-service';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { UserService } from '../../services/users-service';
 })
 export class RegisterPage {
   errorRegister = false;
-  user = inject(UserService);
+  user = inject(RestaurantService);
   isLoading = false;
   router = inject(Router)
 

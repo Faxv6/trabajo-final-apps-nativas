@@ -11,7 +11,7 @@
             </div>
             } @else {
             <div class="d-flex gap-3 align-items-center">
-                <span class="text-dark fw-medium small">{{ restaurantService.getRestaurantName() ?? 'Usuario' }}</span>
+                <a class="text-dark fw-medium small" routerLink="/admin-page">{{ restaurantService.getRestaurantName() ?? 'Usuario' }}</a>
                 <button class="btn btn-outline-danger btn-sm" (click)="logout()">Cerrar sesión</button>
             </div>
             }

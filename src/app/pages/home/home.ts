@@ -4,6 +4,7 @@ import { RouterLink } from "@angular/router";
 import { RestaurantService } from '../../services/restaurant-service';
 import { User } from '../../models';
 import { Users } from '../../interfaces/users';
+import { CategoriesService } from '../../services/categories-service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { Users } from '../../interfaces/users';
 })
 export class Home implements OnInit {
   restaurantService = inject(RestaurantService)
+  categoriesService = inject(CategoriesService)
 
   ngOnInit(): void {
     this.restaurantService.getRestaurants();
@@ -20,11 +22,7 @@ export class Home implements OnInit {
 
   currentCarouselIndex = 0;
 
-  categories = [
-    { id: 1, name: 'Comida' },
-    { id: 2, name: 'Comida' },
-    { id: 3, name: 'Comida' }
-  ];
+  categories = [];
 
   nextSlide() {
     this.currentCarouselIndex = (this.currentCarouselIndex + 1) % this.restaurantService.restaurants.length;
