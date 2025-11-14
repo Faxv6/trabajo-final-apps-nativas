@@ -16,7 +16,6 @@ export class AdminPage implements OnInit {
   categoriesService = inject(CategoriesService)
   category: Category | undefined
   ngOnInit(): void {
-    // Load categories into the service so templates can iterate over `categoriesService.categories`
     this.categoriesService.getCategories();
   }
 

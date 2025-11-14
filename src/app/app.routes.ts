@@ -10,6 +10,7 @@ import { HomeLogged } from './pages/home-logged/home-logged';
 import { RestaurantCard } from './components/restaurant-card/restaurant-card';
 import { AdminPage } from './pages/admin-page/admin-page';
 import { NewEditCategory } from './components/new-edit-category/new-edit-category';
+import { SettingsPage } from './pages/settings-page/settings-page';
 
 export const routes: Routes = [
 
@@ -34,6 +35,10 @@ export const routes: Routes = [
             {
                 path: "admin-page",
                 component: AdminPage
+            },
+            {
+                path: "settings-page/:id",
+                component: SettingsPage
             },
             {
                 path: "new-category",

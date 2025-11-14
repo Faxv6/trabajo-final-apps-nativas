@@ -11,7 +11,8 @@ export class RestaurantService {
   authService = inject(AuthService);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  readonly URL_BASE = "https://w370351.ferozo.com/api/users ";
+  // base URL for user-related endpoints (no trailing space)
+  readonly URL_BASE = "https://w370351.ferozo.com/api/users";
 
   restaurants: Users[] = []
 
@@ -106,4 +107,51 @@ export class RestaurantService {
     );
   }
 
+  /** Update the restaurant/user name on the server. Returns the updated user object or null on failure */
+  async updateRestaurantName(newName: string) {
+    const userId = this.getUserId();
+    if (!userId) return null;
+    try {
+      // First fetch the full current user so we don't overwrite other fields accidentally
+      const current = await this.getRestaurantById(userId);
+      const payload = current ? { ...current, restaurantName: newName } : { restaurantName: newName };
+
+      const res = await fetch(`${this.URL_BASE}/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.authService.token,
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        console.error('Failed to update restaurant name', res.status, await res.text());
+        return null;
+      }
+
+      const updated = await res.json();
+      // update local cache if needed
+      if (this.restaurants && Array.isArray(this.restaurants)) {
+        this.restaurants = this.restaurants.map(r => r.id === updated.id ? updated : r as Users);
+      }
+      return updated;
+    } catch (err) {
+      console.error('updateRestaurantName failed', err);
+      return null;
+    }
+  }
+
+  async deleteRestaurant(id: string | number) {
+    const res = await fetch(this.URL_BASE + "/" + id,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + this.authService.token,
+        },
+      });
+    if (!res.ok) return;
+    this.restaurants = this.restaurants.filter(restaurant => restaurant.id !== id);
+    return true;
+  }
 }
