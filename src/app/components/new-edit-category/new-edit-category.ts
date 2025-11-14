@@ -1,13 +1,14 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CategoriesService } from '../../services/categories-service';
+import { NewCategory } from '../../interfaces/category';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Spinner } from '../spinner/spinner';
 
 @Component({
   selector: 'app-new-edit-category',
-  imports: [CommonModule, FormsModule, Spinner],
+  imports: [CommonModule, FormsModule, Spinner, RouterLink],
   templateUrl: './new-edit-category.html',
   styleUrl: './new-edit-category.scss',
 })
@@ -16,9 +17,8 @@ export class NewEditCategory {
   route = inject(ActivatedRoute);
   router = inject(Router);
 
-  idContacto: string | null = null;
+  idCategory: string | null = null;
   isEditMode = false;
-
   isLoading = false;
 
 
@@ -27,29 +27,36 @@ export class NewEditCategory {
   @Output() save = new EventEmitter<string>()
   @Output() cancel = new EventEmitter<void>()
 
-  name: string = ''
+  name: string | undefined
 
-  ngOnInit(): void {
-    if (this.initialName) this.name = this.initialName
+  async ngOnInit(): Promise<void> {
 
-    this.idContacto = this.route.snapshot.paramMap.get('id');
-    this.isEditMode = !!this.idContacto;
+    this.idCategory = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.idCategory;
+
+    if (this.isEditMode && this.idCategory) {
+      await this.categoriesService.getCategories();
+      const idNum = +this.idCategory;
+      const found = this.categoriesService.categories.find(c => c.id === idNum);
+      if (found) this.name = found.name;
+    }
   }
 
-  onSubmit() {
+  async handleFormSubmission(form: NgForm) {
+    const nuevaCategoria: NewCategory = {
+      name: form.value.name
+    }
     this.isLoading = true;
-    const trimmed = (this.name ?? '').trim();
-    if (!trimmed) {
-      this.isLoading = false;
+    let res;
+    if (this.isEditMode && this.idCategory) {
+      res = await this.categoriesService.editCategory({ ...nuevaCategoria, id: Number(this.idCategory) } as any);
+    } else {
+      res = await this.categoriesService.createCategory(nuevaCategoria);
+    }
+    this.isLoading = false;
+    if (!res) {
       return;
     }
-    this.save.emit(trimmed);
-    this.categoriesService.createCategory({ name: trimmed });
-    this.isLoading = false;
-    this.router.navigate(['/admin-page']);
-  }
-
-  onCancel() {
-    this.cancel.emit()
+    this.router.navigate(["/admin-page"]);
   }
 }

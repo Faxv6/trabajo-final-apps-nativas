@@ -27,9 +27,6 @@
                 <button class="nav-link" id="promos-tab" data-bs-toggle="pill" type="button"
                     role="tab">Promociones</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="favs-tab" data-bs-toggle="pill" type="button" role="tab">Favoritos</button>
-            </li>
         </ul>
 
         <div class="tab-content">
@@ -43,7 +40,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{ category.name }}
                         <div class="btn-group btn-group-sm">
-                            <button class="btn btn-outline-secondary" routerLink="/new-edit-category">Editar</button>
+                            <button class="btn btn-outline-secondary" [routerLink]="['/edit-category/', category.id,]">Editar</button>
                             <button class="btn btn-outline-danger"
                                 (click)="deleteCategoryModal(category?.id ?? 0)">Eliminar</button>
                         </div>

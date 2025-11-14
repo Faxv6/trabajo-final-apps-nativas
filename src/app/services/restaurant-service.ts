@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { NewUser, Users } from '../interfaces/users';
 import { AuthService } from './auth-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../models';
 
 @Injectable({
   providedIn: 'root'
