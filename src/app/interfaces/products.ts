@@ -1,13 +1,14 @@
 export interface Products {
-    name: "string",
-    description: "string",
-    price: 0,
-    categoryId: 0,
-    featured: true,
-    labels: [
-        "None"
-    ],
-    recommendedFor: 0,
-    discount: 0,
-    hasHappyHour: true
+    id: number,
+    userId: string | number,
+    categoryId: number,
+    categoryName: string,
+    name: string,
+    description: string,
+    price: number,
+    featured: boolean,
+    labels: [],
+    recommendedFor: number,
+    discount: number,
+    hasHappyHour: boolean
 }

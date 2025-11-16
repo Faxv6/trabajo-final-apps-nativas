@@ -11,6 +11,7 @@ import { RestaurantCard } from './components/restaurant-card/restaurant-card';
 import { AdminPage } from './pages/admin-page/admin-page';
 import { NewEditCategory } from './components/new-edit-category/new-edit-category';
 import { SettingsPage } from './pages/settings-page/settings-page';
+import { RestaurantPage } from './pages/restaurant-page/restaurant-page';
 
 export const routes: Routes = [
 
@@ -47,6 +48,10 @@ export const routes: Routes = [
             {
                 path: "edit-category/:id",
                 component: NewEditCategory
+            },
+            {
+                path: "restaurant/:id",
+                component: RestaurantPage
             }
         ]
     },

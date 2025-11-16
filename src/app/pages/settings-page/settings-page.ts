@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RestaurantService } from '../../services/restaurant-service';
 import { AuthService } from '../../services/auth-service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-settings-page',
@@ -16,6 +17,7 @@ export class SettingsPage {
   successMessage: string | null = null
   restaurantService = inject(RestaurantService)
   authService = inject(AuthService)
+  id: string | null = this.restaurantService.getUserId()
 
   async changeName() {
     if (!this.name) return
@@ -29,8 +31,6 @@ export class SettingsPage {
         }
         return
       }
-
-
       this.authService.logout()
     } catch (err) {
       console.error(err)
@@ -38,7 +38,19 @@ export class SettingsPage {
       this.isLoading = false
     }
   }
-
-  async delete(id: string | number) {
+  deleteRestaurantModal(id: string | number) {
+    Swal.fire({
+      title: "¿Seguro que quieres eliminar tu restaurante?",
+      showConfirmButton: false,
+      showDenyButton: true,
+      showCancelButton: true,
+      denyButtonText: `Borrar`,
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isDenied) {
+        this.restaurantService.deleteRestaurant(id)
+        Swal.fire("Restaurante eliminado");
+      }
+    });
   }
 }

@@ -7,7 +7,7 @@ import { CategoriesService } from '../../services/categories-service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

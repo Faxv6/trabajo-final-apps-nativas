@@ -23,7 +23,7 @@
             [class.d-none]="i !== currentCarouselIndex">
             <div
               class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
-              <span>{{restaurant.restaurantName}}</span>
+              <a [routerLink]="['/restaurant', restaurant.id]">{{ restaurant.restaurantName }}</a>
             </div>
           </div>
           }
