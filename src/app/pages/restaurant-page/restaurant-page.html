@@ -62,12 +62,11 @@
 
       @if (activeTab === 'categories') {
       <div class="row">
-        @for (category of categories; track category.id) {
+        @for (category of categories; track idCategory) {
         <div class="col-12 col-md-6 mb-2">
           <div class="card h-100">
             <div class="card-body d-flex justify-content-between align-items-center">
-              <div>{{ category.name }}</div>
-
+              <div>{{category}}</div>
             </div>
           </div>
         </div>

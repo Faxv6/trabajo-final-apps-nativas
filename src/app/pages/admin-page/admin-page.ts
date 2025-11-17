@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant-service';
 import { CategoriesService } from '../../services/categories-service';
-import { RouterLink } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import Swal from 'sweetalert2';
 import { Category } from '../../interfaces/category';
 
@@ -14,9 +14,13 @@ import { Category } from '../../interfaces/category';
 export class AdminPage implements OnInit {
   restaurantService = inject(RestaurantService)
   categoriesService = inject(CategoriesService)
+  route = inject(ActivatedRoute)
   category: Category | undefined
   ngOnInit(): void {
-    this.categoriesService.getCategories();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id !== null) {
+      this.categoriesService.getCategories(id);
+    }
   }
 
   deleteCategoryModal(id: string | number) {

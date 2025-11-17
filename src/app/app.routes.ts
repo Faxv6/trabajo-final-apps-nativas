@@ -34,7 +34,7 @@ export const routes: Routes = [
                 component: Home
             },
             {
-                path: "admin-page",
+                path: "admin-page/:id",
                 component: AdminPage
             },
             {

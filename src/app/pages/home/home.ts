@@ -15,6 +15,8 @@ export class Home implements OnInit {
   restaurantService = inject(RestaurantService)
   categoriesService = inject(CategoriesService)
 
+
+  
   ngOnInit(): void {
     this.restaurantService.getRestaurants();
   }

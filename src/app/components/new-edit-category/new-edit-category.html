@@ -10,7 +10,8 @@
             placeholder="Ej: Bebidas" required [disabled]="isLoading" />
     </div>
     <div class="d-flex justify-content-end gap-2">
-        <a class="btn btn-sm btn-outline-secondary me-auto" routerLink="/admin-page">Volver</a>
+        <a class="btn btn-sm btn-outline-secondary me-auto"
+            [routerLink]="['/admin-page/'+ restaurantService.getUserId()]">Volver</a>
         <button type="submit" class="btn btn-sm btn-primary" [disabled]="isLoading">
             @if (isLoading) {
             <app-spinner class="me-2"></app-spinner>

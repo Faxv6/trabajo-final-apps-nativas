@@ -33,9 +33,9 @@ export class CategoriesService {
     }
   }
 
-  async getCategories() {
+  async getCategories(id: string | number) {
     try {
-      const res = await fetch(this.URL_BASE + "/api/users/" + this.restaurantService.getUserId() + "/categories",
+      const res = await fetch(this.URL_BASE + "/api/users/" + id + "/categories",
         {
           headers: {
             Authorization: "Bearer " + this.authService.token,

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant-service';
 import { ProductsService } from '../../services/products-service';
+import { CategoriesService } from '../../services/categories-service';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { ProductsService } from '../../services/products-service';
 })
 export class RestaurantPage implements OnInit {
   restaurantService = inject(RestaurantService);
+  categoriesService = inject(CategoriesService)
   productsService = inject(ProductsService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -23,25 +25,29 @@ export class RestaurantPage implements OnInit {
   isLoading: boolean = true;
   restaurant: any = null;
   activeTab: string = 'products';
+  idCategory: string | null = null;
+
 
   products: any[] = [];
   categories: any[] = [];
   promotions: any[] = [];
   favorites: any[] = [];
 
+
   async ngOnInit(): Promise<void> {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (!id) {
+    this.idCategory = this.route.snapshot.paramMap.get('id');
+    if (!this.idCategory) {
       this.isLoading = false;
       return;
     }
 
     this.isLoading = true;
     try {
-      this.restaurant = await this.restaurantService.getRestaurantById(id);
+      this.restaurant = await this.restaurantService.getRestaurantById(this.idCategory);
 
       this.products = []; // TODO: fetch products for this restaurant
-      this.categories = []; // TODO: fetch categories for this restaurant
+      this.categories = [await this.categoriesService.getCategories(this.idCategory)];
+      console.log("CAtegorias:", this.categories) // TODO: fetch categories for this restaurant
       this.promotions = []; // TODO: fetch promotions
       this.favorites = []; // TODO: fetch favorites
     } catch (err) {

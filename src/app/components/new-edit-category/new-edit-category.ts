@@ -5,6 +5,7 @@ import { CategoriesService } from '../../services/categories-service';
 import { NewCategory } from '../../interfaces/category';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Spinner } from '../spinner/spinner';
+import { RestaurantService } from '../../services/restaurant-service';
 
 @Component({
   selector: 'app-new-edit-category',
@@ -14,6 +15,7 @@ import { Spinner } from '../spinner/spinner';
 })
 export class NewEditCategory {
   categoriesService = inject(CategoriesService)
+  restaurantService = inject(RestaurantService)
   route = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -35,7 +37,7 @@ export class NewEditCategory {
     this.isEditMode = !!this.idCategory;
 
     if (this.isEditMode && this.idCategory) {
-      await this.categoriesService.getCategories();
+      await this.categoriesService.getCategories(this.idCategory);
       const idNum = +this.idCategory;
       const found = this.categoriesService.categories.find(c => c.id === idNum);
       if (found) this.name = found.name;
@@ -57,6 +59,6 @@ export class NewEditCategory {
     if (!res) {
       return;
     }
-    this.router.navigate(["/admin-page"]);
+    this.router.navigate(["/admin-page/" + this.restaurantService.getUserId()]);
   }
 }
