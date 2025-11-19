@@ -6,6 +6,7 @@ import { NewCategory } from '../../interfaces/category';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Spinner } from '../spinner/spinner';
 import { RestaurantService } from '../../services/restaurant-service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-new-edit-category',
@@ -23,8 +24,6 @@ export class NewEditCategory {
   isEditMode = false;
   isLoading = false;
 
-
-
   @Input() initialName: string | null = null
   @Output() save = new EventEmitter<string>()
   @Output() cancel = new EventEmitter<void>()
@@ -32,15 +31,16 @@ export class NewEditCategory {
   name: string | undefined
 
   async ngOnInit(): Promise<void> {
-
     this.idCategory = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.idCategory;
 
     if (this.isEditMode && this.idCategory) {
-      await this.categoriesService.getCategories(this.idCategory);
+      await this.categoriesService.getCategories(this.restaurantService.getUserId()!);
       const idNum = +this.idCategory;
       const found = this.categoriesService.categories.find(c => c.id === idNum);
       if (found) this.name = found.name;
+      console.log(this.idCategory)
+      this.isLoading = false
     }
   }
 

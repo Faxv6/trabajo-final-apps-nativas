@@ -19,6 +19,7 @@ export class RestaurantService {
   /** Obtiene los restaurants del backend y devuelve el array (también guarda en this.restaurants)
    *  Retorna [] en caso de error o si la respuesta no es ok.
    */
+
   async getRestaurants(): Promise<Users[]> {
     try {
       const res = await fetch(this.URL_BASE,
@@ -112,7 +113,6 @@ export class RestaurantService {
     const userId = this.getUserId();
     if (!userId) return null;
     try {
-      // First fetch the full current user so we don't overwrite other fields accidentally
       const current = await this.getRestaurantById(userId);
       const payload = current ? { ...current, restaurantName: newName } : { restaurantName: newName };
 

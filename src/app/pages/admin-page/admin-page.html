@@ -6,7 +6,6 @@
     <div class="card-body">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div class="d-flex align-items-center">
-                <img src="/logo-buggati.png" alt="logo" width="56" height="56" class="rounded me-3">
                 <div>
                     <h5 class="card-title mb-0">{{restaurantService.getRestaurantName()}}</h5>
                     <small class="text-muted">Administrador • Tap Table</small>
@@ -34,7 +33,7 @@
             <div class="tab-pane fade show active" id="products" role="tabpanel">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="mb-0">Categorias</h6>
-                    <a class="btn btn-sm btn-outline-primary" href="/new-category">Nueva categoria</a>
+                    <a class="btn btn-sm btn-outline-primary" routerLink="/new-category">Nueva categoria</a>
                 </div>
                 <ul class="list-group list-group-flush mb-2">
                     @for (category of categoriesService.categories; track category.id) {
@@ -42,7 +41,7 @@
                         {{ category.name }}
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-outline-secondary"
-                                [routerLink]="['/edit-category/', category.id,]">Editar</button>
+                                [routerLink]="['/edit-category/', category?.id]">Editar</button>
                             <button class="btn btn-outline-danger"
                                 (click)="deleteCategoryModal(category?.id ?? 0)">Eliminar</button>
                         </div>
@@ -55,23 +54,20 @@
                 <div class="tab-pane fade show active" id="products" role="tabpanel">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h6 class="mb-0">Productos</h6>
-                        <button class="btn btn-sm btn-outline-primary">Nuevo producto</button>
+                        <button class="btn btn-sm btn-outline-primary" routerLink="/new-product">Nuevo producto</button>
                     </div>
                     <ul class="list-group list-group-flush mb-2">
+                        @for (product of productService.products; track product.id) {
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Hamburguesa clásica
+                            {{ product.name }}
                             <div class="btn-group btn-group-sm">
-                                <button class="btn btn-outline-secondary">Editar</button>
-                                <button class="btn btn-outline-danger">Eliminar</button>
+                                <button class="btn btn-outline-secondary"
+                                    [routerLink]="['/edit-product', product.id]">Editar</button>
+                                <button class="btn btn-outline-danger"
+                                    (click)="deleteProductModal(product.id)">Eliminar</button>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Papas fritas
-                            <div class="btn-group btn-group-sm">
-                                <button class="btn btn-outline-secondary">Editar</button>
-                                <button class="btn btn-outline-danger">Eliminar</button>
-                            </div>
-                        </li>
+                        }
                     </ul>
                 </div>
 

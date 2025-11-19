@@ -1,4 +1,3 @@
-// Small component tweaks for the restaurant admin card
 .restaurant-admin-card {
 	max-width: 900px;
 	margin: 0.75rem auto;
@@ -7,7 +6,7 @@
 
 .restaurant-admin-card .card-body img {
 	object-fit: cover;
-	background-color: #fff7e6; // subtle warm background
+	background-color: #fff7e6;
 }
 
 .restaurant-admin-card .nav-pills .nav-link {
@@ -19,7 +18,6 @@
 	padding-bottom: 0.65rem;
 }
 
-/* small responsive tweak */
 @media (max-width: 576px) {
 	.restaurant-admin-card {
 		margin: 0.5rem;

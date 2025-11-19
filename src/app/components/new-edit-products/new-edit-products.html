@@ -1,0 +1,135 @@
+<div class="container mt-4">
+    <div class="card shadow-sm p-4">
+        @if(isEditMode){
+        <h2 class="mb-4">Editar producto</h2>
+        } @else {
+        <h2 class="mb-4">Nuevo producto</h2>
+        }
+
+        <form (ngSubmit)="handleFormSubmission(newProductForm)" #newProductForm="ngForm">
+
+            <!-- Nombre -->
+            <div class="mb-3">
+                <label for="product-name" class="form-label">Nombre del producto*</label>
+                <input id="product-name" name="name" type="text" class="form-control" [(ngModel)]="name" required
+                    minlength="2" maxlength="50" #nameCtrl="ngModel" [disabled]="isLoading"
+                    placeholder="Ej: Hamburguesa Clásica">
+
+                @if (nameCtrl.dirty && nameCtrl.invalid) {
+                <div class="text-danger small mt-1">
+                    @if (nameCtrl.errors?.['required']) { <p class="mb-0">El nombre es obligatorio</p> }
+                    @if (nameCtrl.errors?.['minlength']) { <p class="mb-0">Debe tener al menos 2 caracteres</p> }
+                    @if (nameCtrl.errors?.['maxlength']) { <p class="mb-0">No puede exceder 50 caracteres</p> }
+                </div>
+                }
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label for="product-description" class="form-label">Descripción</label>
+                <textarea id="product-description" name="description" class="form-control" [(ngModel)]="description"
+                    rows="3" [disabled]="isLoading"
+                    placeholder="Ej: Carne de res, queso cheddar, lechuga y tomate."></textarea>
+            </div>
+
+            <!-- Precio -->
+            <div class="mb-3">
+                <label for="product-price" class="form-label">Precio*</label>
+                <input type="number" id="product-price" name="price" class="form-control" [(ngModel)]="price" required
+                    min="0" step="0.01" #priceCtrl="ngModel" [disabled]="isLoading" placeholder="Ej: 12.50">
+
+                @if (priceCtrl.dirty && priceCtrl.invalid) {
+                <div class="text-danger small mt-1">
+                    @if (priceCtrl.errors?.['required']) { <p class="mb-0">El precio es obligatorio</p> }
+                    @if (priceCtrl.errors?.['min']) { <p class="mb-0">El precio no puede ser negativo</p> }
+                </div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label for="product-category" class="form-label">Categoría*</label>
+                <select id="product-category" name="categoryId" class="form-select" [(ngModel)]="categoryId" required
+                    #catCtrl="ngModel" [disabled]="isLoading">
+                    <option [ngValue]="null" disabled>Seleccione una categoría</option>
+                    @for (cat of categoriesService.categories; track $index) {
+                    <option [value]="cat.id">{{ cat.name }}</option>
+                    }
+                </select>
+
+                @if (catCtrl.dirty && catCtrl.invalid) {
+                <div class="text-danger small mt-1">
+                    @if (catCtrl.errors?.['required']) { <p class="mb-0">Debe seleccionar una categoría</p> }
+                </div>
+                }
+            </div>
+
+            <!-- Etiquetas -->
+            <div class="mb-3">
+                <label for="product-labels" class="form-label">Etiquetas (Separadas por coma)</label>
+                <input id="product-labels" name="labels" class="form-control" [(ngModel)]="labels"
+                    [disabled]="isLoading" placeholder="Ej: picante, vegetariano, nuevo">
+            </div>
+
+            <!-- Recomendado Para -->
+            <div class="mb-3">
+                <label for="product-recommendedfor" class="form-label">Recomendado Para</label>
+                <input id="product-recommendedfor" name="recommendedFor" class="form-control"
+                    [(ngModel)]="recommendedFor" [disabled]="isLoading" placeholder="Ej: Niños, compartir">
+            </div>
+
+            <!-- Descuento -->
+            <div class="mb-3">
+                <label for="product-discount" class="form-label">Descuento (%)</label>
+                <input type="number" id="product-discount" name="discount" class="form-control" [(ngModel)]="discount"
+                    min="0" max="100" #discCtrl="ngModel" [disabled]="isLoading" placeholder="Ej: 10">
+
+                @if (discCtrl.dirty && discCtrl.invalid) {
+                <div class="text-danger small mt-1">
+                    @if (discCtrl.errors?.['min'] || discCtrl.errors?.['max']) { <p class="mb-0">Debe ser entre 0 y 100
+                    </p> }
+                </div>
+                }
+            </div>
+
+            <!-- Checkboxes -->
+            <div class="d-flex gap-4 mb-4 flex-wrap">
+                <div class="form-check">
+                    <input type="checkbox" id="product-featured" name="featured" class="form-check-input"
+                        [(ngModel)]="featured" [disabled]="isLoading">
+                    <label for="product-featured" class="form-check-label">Destacado</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="product-hasHappyHour" name="hasHappyHour" class="form-check-input"
+                        [(ngModel)]="hasHappyHour" [disabled]="isLoading">
+                    <label for="product-hasHappyHour" class="form-check-label">Happy Hour</label>
+                </div>
+            </div>
+
+            <!-- Resumen de errores al intentar enviar -->
+            @if (newProductForm.invalid && newProductForm.dirty) {
+            <div class="alert alert-warning mb-3">
+                <p class="mb-0">⚠️ Por favor, completa todos los campos obligatorios correctamente.</p>
+            </div>
+            }
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-end gap-2">
+                <a class="btn btn-outline-secondary" [routerLink]="['/admin-page', restaurantService.getUserId()]">
+                    Volver
+                </a>
+
+                <button type="submit" class="btn btn-primary" [disabled]="newProductForm.invalid || isLoading">
+                    @if (isLoading) {
+                    <app-spinner class="me-2"></app-spinner>
+                    <span>{{ isEditMode ? 'Guardando...' : 'Creando...' }}</span>
+                    } @else {
+                    <span>{{ isEditMode ? 'Actualizar producto' : 'Crear producto' }}</span>
+                    }
+                </button>
+            </div>
+
+            <p class="text-muted small mt-3 mb-0">* Campos obligatorios</p>
+        </form>
+    </div>
+</div>

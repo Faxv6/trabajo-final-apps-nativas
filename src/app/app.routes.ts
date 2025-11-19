@@ -12,6 +12,7 @@ import { AdminPage } from './pages/admin-page/admin-page';
 import { NewEditCategory } from './components/new-edit-category/new-edit-category';
 import { SettingsPage } from './pages/settings-page/settings-page';
 import { RestaurantPage } from './pages/restaurant-page/restaurant-page';
+import { NewEditProduct } from './components/new-edit-products/new-edit-products';
 
 export const routes: Routes = [
 
@@ -52,7 +53,15 @@ export const routes: Routes = [
             {
                 path: "restaurant/:id",
                 component: RestaurantPage
-            }
+            },
+            {
+                path: "edit-product/:id",
+                component: NewEditProduct
+            },
+            {
+                path: "new-product",
+                component: NewEditProduct
+            },
         ]
     },
 ];

@@ -46,8 +46,7 @@ export class CategoriesService {
         console.error('Failed to load categories', res.status, res.statusText)
         // if auth error, notify and logout
         if (res.status === 401 || res.status === 403) this.showTokenExpired(res.status)
-        this.categories = []
-        return
+        this.categories = [];
       }
       const resJson: Category[] = await res.json()
       this.categories = resJson;
@@ -55,6 +54,7 @@ export class CategoriesService {
       console.error('Error fetching categories', err)
       this.categories = []
     }
+    return this.categories;
   }
 
   async createCategory(nuevaCategoria: NewCategory) {

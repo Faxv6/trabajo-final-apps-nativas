@@ -1,49 +1,90 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { CategoriesService } from '../../services/categories-service';
-import { NewCategory } from '../../interfaces/category';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Spinner } from '../spinner/spinner';
 import { ProductsService } from '../../services/products-service';
 import { NewProduct } from '../../interfaces/products';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Spinner } from '../spinner/spinner';
+import { RestaurantService } from '../../services/restaurant-service';
+import { InvokeFunctionExpr } from '@angular/compiler';
+import { CategoriesService } from '../../services/categories-service';
 
 @Component({
-  selector: 'app-new-edit-category',
+  selector: 'app-new-edit-product',
+  standalone: true, // Asumo que es standalone por los imports
   imports: [CommonModule, FormsModule, Spinner, RouterLink],
-  templateUrl: './new-edit-products.html',
+  templateUrl: './new-edit-products.html', // Asegúrate que coincida el nombre
   styleUrl: './new-edit-products.scss',
 })
-
-
-export class NewEditCategory {
+export class NewEditProduct {
+  productsService = inject(ProductsService);
+  restaurantService = inject(RestaurantService);
+  categoriesService = inject(CategoriesService);
   route = inject(ActivatedRoute);
-  productService = inject(ProductsService)
   router = inject(Router);
 
-  idCategory: string | null = null;
+  idproduct: string | null = null;
   isEditMode = false;
   isLoading = false;
-  idProducto: string | null = null;
+  userId: string | null = null
+  @Input() initialName: string | null = null;
+  @Output() save = new EventEmitter<string>();
+  @Output() cancel = new EventEmitter<void>();
 
+  name: string = '';
+  description: string = '';
+  price: number | null = null;
+  categoryId: number | null = null;
+  categoryName: string = '';
+  featured: boolean = false;
+  labels: [] = [];
+  recommendedFor: number = 0;
+  discount: number | null = null;
+  hasHappyHour: boolean = false;
+  userdId: string | null = null;
 
-    @Input() initialName: string | null = null
-    @Output() save = new EventEmitter<string>()
-    @Output() cancel = new EventEmitter<void>()
+  async ngOnInit(): Promise<void> {
 
-    name: string | undefined
+    this.idproduct = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.idproduct;
 
-
-  async ngOnInit(): Promise < void> {
-
-      this.idProducto = this.route.snapshot.paramMap.get('id');
-      this.isEditMode = !!this.idCategory;
-
-      if(this.isEditMode && this.idCategory) {
-      await this.productService.getProducts();
-      const idNum = +this.idCategory;
-      const found = this.productService.products.find(c => c.id === idNum);
-      if (found) this.name = found.name;
+    if (this.isEditMode && this.idproduct) {
+      await this.productsService.getProducts(this.restaurantService.getUserId()!);
     }
+  }
+
+  async handleFormSubmission(_newProductForm: NgForm) {
+    const nuevoProducto: NewProduct = {
+      name: this.name,
+      description: this.description,
+      price: this.price!,
+      categoryId: this.categoryId!,
+      featured: this.featured,
+      labels: this.labels,
+      recommendedFor: this.recommendedFor,
+      discount: this.discount || 0,
+      hasHappyHour: false,
+    };
+    console.log(this.restaurantService.getUserId()!
+    )
+    let res;
+
+    try {
+      if (this.isEditMode && this.idproduct) {
+        res = await this.productsService.editProduct({ ...nuevoProducto, id: Number(this.idproduct) } as any);
+      } else {
+        res = await this.productsService.createProduct(nuevoProducto);
+      }
+    } catch (e) {
+      console.error("Error al enviar formulario:", e);
+      res = null;
+    } finally {
+      this.isLoading = false; // 2. Apagar loading DESPUÉS de la llamada
+    }
+
+    if (!res) {
+      return;
+    }
+    this.router.navigate(["/admin-page/" + this.restaurantService.getUserId()]);
   }
 }

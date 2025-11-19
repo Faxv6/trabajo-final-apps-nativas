@@ -3,7 +3,7 @@ export interface Products {
     userId: string | number,
     categoryId: number,
     categoryName: string,
-    name: string,
+    name: any,
     description: string,
     price: number,
     featured: boolean,
@@ -14,12 +14,10 @@ export interface Products {
 }
 
 export interface NewProduct {
-    userId: string | number,
-    categoryId: number,
-    categoryName: string,
     name: string,
     description: string,
     price: number,
+    categoryId: number,
     featured: boolean,
     labels: [],
     recommendedFor: number,

@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RestaurantService } from '../../services/restaurant-service';
 import { Users } from '../../interfaces/users';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home-logged.html',
   styleUrls: ['./home-logged.scss'],
 })
