@@ -63,6 +63,7 @@ export class RestaurantPage implements OnInit {
 
     } catch (error) {
       console.error('error cargando la data del restaurant:', error)
+      
     } finally {
       this.isLoading = false;
     }
