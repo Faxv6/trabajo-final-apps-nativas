@@ -41,16 +41,18 @@ export class RestaurantPage implements OnInit {
     if (!this.userId) {
       return;
     }
-
+    try{
     this.restaurant = await this.restaurantService.getRestaurantById(this.userId);
-
-    this.products = [];
     this.categories = await this.categoriesService.getCategories(this.userId!);
-    console.log("CAtegorias:", this.categoriesService.getCategories(this.userId))
+    this.products = await this.productsService.getProducts(this.userId)
+    
     this.promotions = [];
     this.favorites = [];
-
-    this.isLoading = false;
+    } catch (error) {
+      console.error('error cargando la data del restaurant:', error)
+    } finally {
+      this.isLoading = false;
+    }
 
   }
 }
