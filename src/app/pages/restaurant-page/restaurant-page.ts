@@ -8,6 +8,10 @@ import { ProductsService } from '../../services/products-service';
 import { CategoriesService } from '../../services/categories-service';
 import { Category } from '../../interfaces/category';
 
+interface MenuSection {
+  category: Category;
+  products: any[];
+}
 
 @Component({
   selector: 'app-restaurant-page',
@@ -25,15 +29,15 @@ export class RestaurantPage implements OnInit {
   isLoading: boolean = true;
   restaurant: any = null;
   activeTab: string = 'products';
-  idCategory: string | null = null;
+  idCategory: number | null = null;
   userId: string | null = null;
-
-
 
   products: any[] = [];
   categories: Category[] = [];
   promotions: any[] = [];
   favorites: any[] = [];
+
+  menu: MenuSection[] = [];
 
 
   async ngOnInit(): Promise<void> {
@@ -41,18 +45,42 @@ export class RestaurantPage implements OnInit {
     if (!this.userId) {
       return;
     }
+ 
     try{
-    this.restaurant = await this.restaurantService.getRestaurantById(this.userId);
-    this.categories = await this.categoriesService.getCategories(this.userId!);
-    this.products = await this.productsService.getProducts(this.userId)
-    
-    this.promotions = [];
-    this.favorites = [];
+      // Cargamos todo al mismo tiempo
+      const [restaurant, categories, products] = await Promise.all([
+        this.restaurantService.getRestaurantById(this.userId),
+        this.categoriesService.getCategories(this.userId!),
+        this.productsService.getProducts(this.userId),]);
+
+      this.restaurant = restaurant;
+      this.categories = categories || [];
+      this.products = products || [];
+        
+      this.organizeMenu();
+      this.promotions = [];
+      this.favorites = [];
+
     } catch (error) {
       console.error('error cargando la data del restaurant:', error)
     } finally {
       this.isLoading = false;
     }
 
+  }
+
+  organizeMenu(){
+    if (!this.categories.length || !this.products.length) {
+        this.menu = [];
+        return;
+    }
+    this.menu = this.categories.map(category => {
+        return {
+            category: category,
+            products: this.products.filter(p => p.categoryId === category.id)
+        };
+    })
+    // Ocultamos las categorías vacías
+    .filter(section => section.products.length > 0);
   }
 }
