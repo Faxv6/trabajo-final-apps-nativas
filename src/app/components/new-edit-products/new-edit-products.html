@@ -14,12 +14,11 @@
                 <input id="product-name" name="name" type="text" class="form-control" [(ngModel)]="name" required
                     minlength="2" maxlength="50" #nameCtrl="ngModel" [disabled]="isLoading"
                     placeholder="Ej: Hamburguesa Clásica">
-
+                
                 @if (nameCtrl.dirty && nameCtrl.invalid) {
                 <div class="text-danger small mt-1">
                     @if (nameCtrl.errors?.['required']) { <p class="mb-0">El nombre es obligatorio</p> }
                     @if (nameCtrl.errors?.['minlength']) { <p class="mb-0">Debe tener al menos 2 caracteres</p> }
-                    @if (nameCtrl.errors?.['maxlength']) { <p class="mb-0">No puede exceder 50 caracteres</p> }
                 </div>
                 }
             </div>
@@ -37,15 +36,9 @@
                 <label for="product-price" class="form-label">Precio*</label>
                 <input type="number" id="product-price" name="price" class="form-control" [(ngModel)]="price" required
                     min="0" step="0.01" #priceCtrl="ngModel" [disabled]="isLoading" placeholder="Ej: 12.50">
-
-                @if (priceCtrl.dirty && priceCtrl.invalid) {
-                <div class="text-danger small mt-1">
-                    @if (priceCtrl.errors?.['required']) { <p class="mb-0">El precio es obligatorio</p> }
-                    @if (priceCtrl.errors?.['min']) { <p class="mb-0">El precio no puede ser negativo</p> }
-                </div>
-                }
             </div>
 
+            <!-- Categoría -->
             <div class="mb-3">
                 <label for="product-category" class="form-label">Categoría*</label>
                 <select id="product-category" name="categoryId" class="form-select" [(ngModel)]="categoryId" required
@@ -55,43 +48,42 @@
                     <option [value]="cat.id">{{ cat.name }}</option>
                     }
                 </select>
+            </div>
 
-                @if (catCtrl.dirty && catCtrl.invalid) {
-                <div class="text-danger small mt-1">
-                    @if (catCtrl.errors?.['required']) { <p class="mb-0">Debe seleccionar una categoría</p> }
+            <!-- ETIQUETAS (Checkboxes Dinámicos) -->
+            <!-- Esto recorre la lista availableLabels del TS y crea un checkbox por cada una -->
+            <div class="mb-3">
+                <label class="form-label d-block">Etiquetas (Características)</label>
+                <div class="d-flex flex-wrap gap-3 p-2 border rounded bg-light">
+                    @for (label of availableLabels; track label) {
+                    <div class="form-check">
+                        <!-- Vinculamos el evento change a nuestra función onLabelChange -->
+                        <input class="form-check-input" type="checkbox" [id]="'label-' + label" [value]="label"
+                            [checked]="hasLabel(label)" (change)="onLabelChange($event, label)" [disabled]="isLoading">
+                        <label class="form-check-label" [for]="'label-' + label">
+                            {{ label }}
+                        </label>
+                    </div>
+                    }
                 </div>
-                }
+                <div class="form-text small">Selecciona las características especiales del plato.</div>
             </div>
 
-            <!-- Etiquetas -->
+            <!-- RECOMENDADO PARA (Numérico) -->
             <div class="mb-3">
-                <label for="product-labels" class="form-label">Etiquetas (Separadas por coma)</label>
-                <input id="product-labels" name="labels" class="form-control" [(ngModel)]="labels"
-                    [disabled]="isLoading" placeholder="Ej: picante, vegetariano, nuevo">
-            </div>
-
-            <!-- Recomendado Para -->
-            <div class="mb-3">
-                <label for="product-recommendedfor" class="form-label">Recomendado Para</label>
-                <input id="product-recommendedfor" name="recommendedFor" class="form-control"
-                    [(ngModel)]="recommendedFor" [disabled]="isLoading" placeholder="Ej: Niños, compartir">
+                <label for="product-recommendedfor" class="form-label">Recomendado para (Cant. Personas)</label>
+                <input type="number" id="product-recommendedfor" name="recommendedFor" class="form-control"
+                    [(ngModel)]="recommendedFor" [disabled]="isLoading" min="0" placeholder="Ej: 2">
             </div>
 
             <!-- Descuento -->
             <div class="mb-3">
                 <label for="product-discount" class="form-label">Descuento (%)</label>
                 <input type="number" id="product-discount" name="discount" class="form-control" [(ngModel)]="discount"
-                    min="0" max="100" #discCtrl="ngModel" [disabled]="isLoading" placeholder="Ej: 10">
-
-                @if (discCtrl.dirty && discCtrl.invalid) {
-                <div class="text-danger small mt-1">
-                    @if (discCtrl.errors?.['min'] || discCtrl.errors?.['max']) { <p class="mb-0">Debe ser entre 0 y 100
-                    </p> }
-                </div>
-                }
+                    min="0" max="100" [disabled]="isLoading" placeholder="Ej: 10">
             </div>
 
-            <!-- Checkboxes -->
+            <!-- Checkboxes Booleanos -->
             <div class="d-flex gap-4 mb-4 flex-wrap">
                 <div class="form-check">
                     <input type="checkbox" id="product-featured" name="featured" class="form-check-input"
@@ -106,14 +98,7 @@
                 </div>
             </div>
 
-            <!-- Resumen de errores al intentar enviar -->
-            @if (newProductForm.invalid && newProductForm.dirty) {
-            <div class="alert alert-warning mb-3">
-                <p class="mb-0">⚠️ Por favor, completa todos los campos obligatorios correctamente.</p>
-            </div>
-            }
-
-            <!-- Botones -->
+            <!-- Botones de Acción -->
             <div class="d-flex justify-content-end gap-2">
                 <a class="btn btn-outline-secondary" [routerLink]="['/admin-page', restaurantService.getUserId()]">
                     Volver
@@ -128,8 +113,6 @@
                     }
                 </button>
             </div>
-
-            <p class="text-muted small mt-3 mb-0">* Campos obligatorios</p>
         </form>
     </div>
 </div>

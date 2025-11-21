@@ -23,10 +23,16 @@ export class NewEditProduct {
   route = inject(ActivatedRoute);
   router = inject(Router);
 
+  availableLabels: string[] = [
+    "Vegan", "Vegetarian", "GlutenFree", "Spicy", 
+    "SugarFree", "Kids", "Shareable", "None"
+  ];
+
   idproduct: string | null = null;
   isEditMode = false;
   isLoading = false;
   userId: string | null = null
+
   @Input() initialName: string | null = null;
   @Output() save = new EventEmitter<string>();
   @Output() cancel = new EventEmitter<void>();
@@ -37,54 +43,104 @@ export class NewEditProduct {
   categoryId: number | null = null;
   categoryName: string = '';
   featured: boolean = false;
-  labels: [] = [];
-  recommendedFor: number = 0;
+  
+  selectedLabels: string[] = []; // Array para los checkboxes
+  recommendedFor: number | null = null; // Número para la API
   discount: number | null = null;
   hasHappyHour: boolean = false;
-  userdId: string | null = null;
+
 
   async ngOnInit(): Promise<void> {
-
+    this.userId = this.restaurantService.getUserId();
     this.idproduct = this.route.snapshot.paramMap.get('id');
-    this.isEditMode = !!this.idproduct;
 
-    if (this.isEditMode && this.idproduct) {
-      await this.productsService.getProducts(this.restaurantService.getUserId()!);
+
+    if (this.idproduct) {
+      this.isEditMode = true;
+      this.isLoading = true; 
+
+      try {
+        const products = await this.productsService.getProducts(this.userId!);
+        // Comparamos con == por si idproduct viene como string y el ID es number
+        const productToEdit = products.find((p: any) => p.id == this.idproduct);
+
+        if (productToEdit) {
+          this.fillForm(productToEdit);
+        } else {
+          this.router.navigate(['/admin-page', this.userId]);
+        }
+      } catch (error) {
+        console.error('Error cargando producto:', error);
+      } finally {
+        this.isLoading = false;
+      }
     }
   }
 
-  async handleFormSubmission(_newProductForm: NgForm) {
+  fillForm(product: any) {
+    this.name = product.name;
+    this.description = product.description;
+    this.price = product.price;
+    this.categoryId = product.categoryId;
+    this.featured = product.featured;
+    this.discount = product.discount;
+    this.hasHappyHour = product.hasHappyHour;
+    this.recommendedFor = product.recommendedFor;
+    
+    if (Array.isArray(product.labels)) {
+      this.selectedLabels = product.labels;
+    }
+  }
+
+  // Función para manejar Checkboxes
+  onLabelChange(event: any, label: string) {
+    if (event.target.checked) {
+      if (!this.selectedLabels.includes(label)) {
+        this.selectedLabels.push(label);
+      }
+    } else {
+      this.selectedLabels = this.selectedLabels.filter(l => l !== label);
+    }
+  }
+
+  hasLabel(label: string): boolean {
+    return this.selectedLabels.includes(label);
+  }
+
+  async handleFormSubmission(form: NgForm) {
+    if (form.invalid) return;
+    this.isLoading = true;
+
     const nuevoProducto: NewProduct = {
       name: this.name,
       description: this.description,
       price: this.price!,
       categoryId: this.categoryId!,
       featured: this.featured,
-      labels: this.labels,
-      recommendedFor: this.recommendedFor,
+      labels: this.selectedLabels,
+      recommendedFor: this.recommendedFor || 1, // Envía 1 si está vacío
       discount: this.discount || 0,
-      hasHappyHour: false,
+      hasHappyHour: this.hasHappyHour, 
     };
-    console.log(this.restaurantService.getUserId()!
-    )
-    let res;
 
+    let res;
     try {
       if (this.isEditMode && this.idproduct) {
-        res = await this.productsService.editProduct({ ...nuevoProducto, id: Number(this.idproduct) } as any);
+        res = await this.productsService.editProduct({ 
+          ...nuevoProducto, 
+          id: Number(this.idproduct) 
+        } as any);
       } else {
         res = await this.productsService.createProduct(nuevoProducto);
       }
+      
+      if (res) {
+        this.router.navigate(["/admin-page/" + this.userId]);
+      }
     } catch (e) {
-      console.error("Error al enviar formulario:", e);
-      res = null;
+      console.error("Error enviando formulario:", e);
     } finally {
-      this.isLoading = false; // 2. Apagar loading DESPUÉS de la llamada
+      this.isLoading = false;
     }
-
-    if (!res) {
-      return;
-    }
-    this.router.navigate(["/admin-page/" + this.restaurantService.getUserId()]);
   }
 }

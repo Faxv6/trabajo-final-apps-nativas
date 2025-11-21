@@ -3,11 +3,11 @@ export interface Products {
     userId: string | number,
     categoryId: number,
     categoryName: string,
-    name: any,
+    name: string,
     description: string,
     price: number,
     featured: boolean,
-    labels: [],
+    labels: string[],
     recommendedFor: number,
     discount: number,
     hasHappyHour: boolean
@@ -19,8 +19,8 @@ export interface NewProduct {
     price: number,
     categoryId: number,
     featured: boolean,
-    labels: [],
+    labels: string[],
     recommendedFor: number,
     discount: number,
-    hasHappyHour: boolean
+    hasHappyHour: boolean,
 }
