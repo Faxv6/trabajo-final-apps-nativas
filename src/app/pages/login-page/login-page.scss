@@ -1,199 +1,74 @@
-/*
-    Referencias de estilos utilizados:
-    - Bootstrap 5.3 Forms & Input groups:
-        https://getbootstrap.com/docs/5.3/forms/overview/
-        https://getbootstrap.com/docs/5.3/forms/input-group/
-    - Bootstrap 5.3 Utilities (colors, spacing, shadows):
-        https://getbootstrap.com/docs/5.3/utilities/overview/
-        https://getbootstrap.com/docs/5.3/utilities/spacing/
-        https://getbootstrap.com/docs/5.3/utilities/shadows/
-    - Paleta de colores inspirada en McDonald's:
-        https://brandpalettes.com/mcdonalds-colors/
-*/
+// Variables de Marca
 $mcdonalds-red: #DA291C;
 $mcdonalds-yellow: #FFC72C;
 $mcdonalds-dark: #27251F;
 
-.login-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f8f9fa;
-    padding: 2rem 1rem;
+/* 1. Fondo y Contenedor */
+.bg-mcdonalds-light {
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
-
-// Login Card
-.login-card {
-    background: white;
-    border-radius: 24px !important;
-    padding: 3rem 2.5rem;
-    width: 100%;
-    max-width: 480px;
-    position: relative;
-    z-index: 1;
-    animation: slideUp 0.5s ease-out;
-
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+/* 2. Animación de entrada */
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
 }
 
-// Brand Section
-.brand-section {
-    .brand-icon {
-        width: 64px;
-        height: 64px;
-        background: yellow;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 8px 24px rgba($mcdonalds-yellow, 0.3);
-
-        svg {
-            width: 32px;
-            height: 32px;
-            color: white;
-        }
-    }
-
-    .brand-title {
-        font-size: 2rem;
-        font-weight: 800;
-        color: $mcdonalds-dark;
-    }
-
-    .brand-subtitle {
-        font-size: 0.95rem;
-    }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-// Custom Input Groups
-.input-group-custom {
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid #e2e8f0;
-    transition: all 0.3s ease;
+/* 3. Inputs Modernos "Seamless" */
+.input-group-seamless {
+  border: 1px solid #dee2e6;
+  border-radius: 0.75rem; /* rounded-3 */
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  background-color: white;
 
-    &:focus-within {
-        border-color: $mcdonalds-red;
-        box-shadow: 0 0 0 4px rgba($mcdonalds-red, 0.1);
-
-        .input-group-text,
-        .toggle-password-btn {
-            border-color: $mcdonalds-red;
-        }
-
-        .input-icon {
-            color: $mcdonalds-red;
-        }
-    }
-
-    .input-group-text {
-        background: transparent;
-        border: none;
-        padding-left: 1rem;
-    }
-
-    .form-control {
-        border: none;
-        box-shadow: none !important;
-        padding: 0.875rem 1rem;
-
-        &:focus {
-            background: white;
-        }
-    }
-
-    .toggle-password-btn {
-        border: none;
-        background: transparent;
-        padding-right: 1rem;
-        color: #a0aec0;
-        transition: color 0.3s ease;
-
-        &:hover {
-            color: $mcdonalds-red;
-        }
-    }
-}
-
-.input-icon {
-    width: 20px;
-    height: 20px;
-    color: #a0aec0;
-    transition: color 0.3s ease;
-}
-
-.form-label {
-    font-size: 0.875rem;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-}
-
-// Forgot Password Link
-.forgot-password-link {
-    color: $mcdonalds-red;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-
-    &:hover {
-        color: yellow;
-        text-decoration: underline;
-    }
-}
-
-
-// Footer Link
-.footer-link {
-    .register-link {
-        color: $mcdonalds-red;
-        text-decoration: none;
-        transition: all 0.3s ease;
-
-        &:hover {
-            color: yellow;
-            text-decoration: underline;
-        }
-    }
-}
-
-
-
-// Alert customization
-.alert {
-    border-radius: 12px;
+  /* Iconos y Botones dentro del grupo */
+  .input-group-text, 
+  .btn-toggle {
+    background-color: transparent;
     border: none;
+    color: #6c757d;
+  }
+
+  .form-control {
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Efecto Focus al grupo completo */
+  &:focus-within {
+    border-color: $mcdonalds-red;
+    box-shadow: 0 0 0 0.25rem rgba($mcdonalds-red, 0.15);
+    
+    .input-group-text,
+    .btn-toggle:hover {
+      color: $mcdonalds-red;
+    }
+  }
 }
 
-// Responsive Design
-@media (max-width: 640px) {
-    .login-container {
-        padding: 1rem;
-    }
+/* 4. Botones y Marca */
+.text-brand-gradient {
+  background: linear-gradient(135deg, $mcdonalds-red 0%, $mcdonalds-yellow 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .login-card {
-        padding: 2rem 1.5rem;
-    }
-
-    .brand-section {
-        .brand-title {
-            font-size: 1.75rem;
-        }
-    }
-
-    .social-buttons {
-        grid-template-columns: 1fr;
-    }
+.btn-brand {
+  background-color: $mcdonalds-red;
+  border: none;
+  color: white;
+  transition: transform 0.2s;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($mcdonalds-red, 5%);
+    transform: translateY(-2px);
+    color: white;
+  }
 }

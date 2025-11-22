@@ -12,66 +12,113 @@
 -->
 
 <main class="main-content">
-  <div class="container py-5">
-    <section class="mb-5">
-      <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Restaurantes destacados
+  <div class="container py-2">
+    <div class="container py-2">
+      <h2 class="fw-bold mb-4 pb-2 border-bottom border-warning border-3 d-inline-block">
+        Restaurantes Destacados
       </h2>
-      <div class="carousel-container position-relative bg-light rounded">
-        <div class="carousel-track d-flex">
+
+      <div
+        class="carousel slide shadow-lg rounded-4 overflow-hidden position-relative"
+        style="height: 450px"
+      >
+        <div class="carousel-inner h-100">
           @for (restaurant of restaurantService.restaurants; track restaurant.id; let i = $index) {
-          <div class="carousel-item w-100" [class.active]="i === currentCarouselIndex"
-            [class.d-none]="i !== currentCarouselIndex">
-            <div
-              class="restaurant-card bg-danger text-white d-flex align-items-center justify-content-center h-100 fs-4">
-              <a [routerLink]="['/restaurant', restaurant.id]">{{ restaurant.restaurantName }}</a>
+
+          <div class="carousel-item h-100" [class.active]="i === currentCarouselIndex">
+            <div class="overlay-gradient position-absolute w-100 h-100 top-0 start-0"></div>
+
+            <div class="carousel-caption pb-5 text-start ps-md-5">
+              <span class="badge bg-warning text-dark mb-2 shadow-sm">Destacado</span>
+              <h3 class="display-5 fw-bold text-white mb-2">{{ restaurant.restaurantName }}</h3>
+
+              <a
+                [routerLink]="['/restaurant', restaurant.id]"
+                class="btn btn-outline-light rounded-pill px-4 mt-3 btn-sm-mobile"
+              >
+                Ver Menú <i class="bi bi-arrow-right ms-2"></i>
+              </a>
             </div>
           </div>
           }
         </div>
 
-        <button
-          class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 start-0 translate-middle-y ms-3 shadow-sm"
-          (click)="prevSlide()">‹</button>
-        <button
-          class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 end-0 translate-middle-y me-3 shadow-sm"
-          (click)="nextSlide()">›</button>
-      </div>
-    </section>
+        <button class="carousel-control-prev" type="button" (click)="prevSlide()">
+          <span class="control-icon" aria-hidden="true">
+            <i class="bi bi-chevron-left fs-4"></i>
+          </span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
 
-    <!-- Menú -->
-    <section class="mb-5">
-      <h2 class="fw-semibold mb-4 pb-2 border-bottom border-warning border-2 d-inline-block">Menú del día</h2>
-      <div class="row g-3">
-        <div class="col-md-6 col-lg-3">
-          <div class="card border-danger border-2 text-center menu-card">
-            <div class="card-body py-4">
-              <span class="fw-medium fs-5">Pizzas</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="card border-danger border-2 text-center menu-card">
-            <div class="card-body py-4">
-              <span class="fw-medium fs-5">Hamburguesas</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="card border-danger border-2 text-center menu-card">
-            <div class="card-body py-4">
-              <span class="fw-medium fs-5">Pastas</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="card border-danger border-2 text-center menu-card">
-            <div class="card-body py-4">
-              <span class="fw-medium fs-5">Ensaladas</span>
-            </div>
-          </div>
-        </div>
+        <button class="carousel-control-next" type="button" (click)="nextSlide()">
+          <span class="control-icon" aria-hidden="true">
+            <i class="bi bi-chevron-right fs-4"></i>
+          </span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
       </div>
-    </section>
-
+    </div>
   </div>
+  
+  <button
+    class="carousel-btn carousel-btn-prev btn btn-light rounded-circle position-absolute top-50 pb-2 start-0 translate-middle-y ms-3 shadow-sm"
+    (click)="prevSlide()"
+  >
+    ‹
+  </button>
+  <button
+    class="carousel-btn carousel-btn-next btn btn-light rounded-circle position-absolute top-50 pb-2 end-0 translate-middle-y me-3 shadow-sm"
+    (click)="nextSlide()"
+  >
+    ›
+  </button>
+
+  
+<section class="mb-5">
+
+  <div class="text-center mb-4">
+    <h2 class="fw-bold pb-2 border-bottom border-warning border-3 d-inline-block text-dark pt-4">
+      Todos los restaurantes
+    </h2>
+  </div>
+
+
+  <div class="row justify-content-center">
+    
+    <div class="col-12 col-md-8 col-lg-6">
+      
+      <div class="d-flex flex-column gap-3">
+        @for (restaurant of restaurantService.restaurants; track restaurant.id) {
+        
+        <a [routerLink]="['/restaurant/', restaurant.id]" 
+           class="restaurant-card card border-0 shadow-sm text-decoration-none text-dark p-3">
+          
+          <div class="d-flex align-items-center gap-3">
+            
+            <div class="restaurant-avatar rounded-circle bg-warning bg-opacity-25 text-warning-emphasis d-flex align-items-center justify-content-center fw-bold fs-4 flex-shrink-0" 
+                 style="width: 60px; height: 60px;">
+              {{ restaurant.restaurantName.charAt(0).toUpperCase() }}
+            </div>
+            <div class="flex-grow-1">
+              <h5 class="mb-1 fw-bold text-dark">{{ restaurant.restaurantName }}</h5>
+              <p class="mb-0 text-muted small">
+                <span class="bi bi-geo-alt-fill me-1 text-secondary"></span>
+                {{ restaurant.address || 'Ver menú y detalles' }}
+              </p>
+            </div>
+
+            <div class="action-icon text-warning">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </div>
+
+          </div>
+        </a>
+        }
+      </div>
+
+    </div>
+  </div>
+</section>
 </main>

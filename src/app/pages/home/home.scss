@@ -1,14 +1,17 @@
-// McDonald's Color Palette
-$mcdonalds-red: #DA291C;
-$mcdonalds-yellow: #FFC72C;
-$mcdonalds-dark: #27251F;
+
+$mcdonalds-red: #da291c;
+$mcdonalds-yellow: #ffc72c;
+$mcdonalds-dark: #27251f;
 
 .home-container {
   min-height: 100vh;
   background: #ffffff;
 }
 
-// Navbar personalizado
+.main-content {
+  margin-top: 30px; 
+}
+
 .navbar-custom {
   border-bottom-color: $mcdonalds-red !important;
 
@@ -22,43 +25,84 @@ $mcdonalds-dark: #27251F;
   }
 }
 
-// Contenido principal con margen superior por navbar fija
-.main-content {
-  margin-top: 70px;
+.carousel {
+  height: 450px;
+  position: relative;
+  background-color: $mcdonalds-dark; 
 }
 
-// Carousel personalizado
-.carousel-container {
-  height: 300px;
-  overflow: hidden;
+.carousel-item {
+  height: 100%;
+  width: 100%;
+  transition: opacity 0.6s ease-in-out;
+  opacity: 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
-  .carousel-item {
-    height: 300px;
-    transition: opacity 0.4s ease;
-  }
-
-  .restaurant-card {
-    height: 100%;
-    font-weight: 500;
-  }
-
-  .carousel-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 2rem;
-    line-height: 1;
-    padding: 0;
-    color: $mcdonalds-red;
-    border: none;
-
-    &:hover {
-      background: $mcdonalds-red !important;
-      color: white;
-    }
+  &.active {
+    opacity: 1;
+    position: relative; 
+    z-index: 2;
   }
 }
 
-// Cards de categorías con hover
+.object-fit-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-gradient {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  z-index: 2;
+  pointer-events: none; 
+}
+
+.carousel-caption {
+  z-index: 3;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 60px;
+  opacity: 1;
+  z-index: 10;
+}
+
+.control-icon {
+  background-color: rgba(255, 255, 255, 0.15); /* Vidrio sutil */
+  backdrop-filter: blur(4px);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.carousel-control-prev:hover .control-icon,
+.carousel-control-next:hover .control-icon {
+  background-color: #fff;
+  color: $mcdonalds-red;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
 .category-card {
   cursor: pointer;
   transition: all 0.2s ease;
@@ -70,7 +114,6 @@ $mcdonalds-dark: #27251F;
   }
 }
 
-// Cards de menú con hover
 .menu-card {
   cursor: pointer;
   transition: all 0.2s ease;
@@ -86,20 +129,21 @@ $mcdonalds-dark: #27251F;
   }
 }
 
-// Responsive
 @media (max-width: 768px) {
-  .carousel-container {
-    height: 200px;
+  .carousel {
+    height: 280px;
+  }
 
-    .carousel-item {
-      height: 200px;
-    }
+  .control-icon {
+    width: 35px;
+    height: 35px;
 
-    .carousel-btn {
-      width: 35px;
-      height: 35px;
-      font-size: 1.5rem;
+    i {
+      font-size: 1rem;
     }
   }
-}
 
+  .carousel-caption {
+    padding-bottom: 2rem;
+  }
+}

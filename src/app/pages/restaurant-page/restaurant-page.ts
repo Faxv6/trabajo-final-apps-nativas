@@ -38,7 +38,17 @@ export class RestaurantPage implements OnInit {
   favorites: any[] = [];
 
   menu: MenuSection[] = [];
+  // variable para checkear id de categoria para el filtrado
+  selectedCategoryId: number | null = null;
 
+  // getter que devuelve el menú filtrado
+  get filteredMenu(): MenuSection[] {
+    if (this.selectedCategoryId === null) {
+      return this.menu; // Devuelve todo
+    }
+    // devuelve solo la sección que coincide con el ID seleccionado
+    return this.menu.filter(section => section.category.id === this.selectedCategoryId);
+  }
 
   async ngOnInit(): Promise<void> {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -63,7 +73,7 @@ export class RestaurantPage implements OnInit {
 
     } catch (error) {
       console.error('error cargando la data del restaurant:', error)
-      
+
     } finally {
       this.isLoading = false;
     }
@@ -84,4 +94,11 @@ export class RestaurantPage implements OnInit {
     // Ocultamos las categorías vacías
     .filter(section => section.products.length > 0);
   }
+
+  // Función para cambiar el filtro
+  setCategoryFilter(id: number | null) {
+    this.selectedCategoryId = id;
+  }
+
+
 }

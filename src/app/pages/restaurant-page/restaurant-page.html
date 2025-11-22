@@ -42,10 +42,34 @@
 
       <!-- PESTAÑA MENÚ -->
       @if (activeTab === 'products') {
+        
+        <!-- NUEVO: Barra de Filtros de Categorías (Horizontal Scroll) -->
+        @if (menu.length > 0) {
+        <div class="category-filter-bar d-flex gap-2 overflow-auto pb-3 mb-2">
+            <!-- Botón "Todos" -->
+            <button class="btn btn-sm rounded-pill text-nowrap" 
+                    [class.btn-dark]="selectedCategoryId === null" 
+                    [class.btn-outline-dark]="selectedCategoryId !== null"
+                    (click)="setCategoryFilter(null)">
+                Todos
+            </button>
+
+            <!-- Botones por Categoría -->
+            @for (section of menu; track section.category.id) {
+            <button class="btn btn-sm rounded-pill text-nowrap" 
+                    [class.btn-dark]="selectedCategoryId === section.category.id" 
+                    [class.btn-outline-dark]="selectedCategoryId !== section.category.id"
+                    (click)="setCategoryFilter(section.category.id)">
+                {{ section.category.name }}
+            </button>
+            }
+        </div>
+        }
+
       <div class="menu-container">
         
         <!-- BUCLE PRINCIPAL: Iteramos por SECCIONES del menú -->
-        @for (section of menu; track section.category.id) {
+        @for (section of filteredMenu; track section.category.id) {
           <div class="mb-4">
             <!-- Título de la Sección (Nombre de la Categoría) -->
             <h5 class="border-bottom pb-2 mb-3 text-primary fw-bold text-uppercase">
