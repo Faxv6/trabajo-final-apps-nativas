@@ -59,7 +59,7 @@ export class AuthService {
           this.logout()
         }
       }
-    }, 600)
+    }, 1000 * 60 * 10)
   }
 }
 

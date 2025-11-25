@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CategoriesService } from '../../services/categories-service';
@@ -23,11 +23,6 @@ export class NewEditCategory {
   idCategory: string | null = null;
   isEditMode = false;
   isLoading = false;
-
-  @Input() initialName: string | null = null
-  @Output() save = new EventEmitter<string>()
-  @Output() cancel = new EventEmitter<void>()
-
   name: string | undefined
 
   async ngOnInit(): Promise<void> {
@@ -39,7 +34,6 @@ export class NewEditCategory {
       const idNum = +this.idCategory;
       const found = this.categoriesService.categories.find(c => c.id === idNum);
       if (found) this.name = found.name;
-      console.log(this.idCategory)
       this.isLoading = false
     }
   }

@@ -8,10 +8,8 @@ export const onlyLoggedUserGuard: CanActivateChildFn = (childRoute, state) => {
   const router = inject(Router)
   //Si no estoy logueado redirijo al usuario
   if (!auth.token) {
-    const loginPath = router.parseUrl("/login");
-    return new RedirectCommand(loginPath, {
-      skipLocationChange: true,
-    });
+    router.navigate(['/login'])
+    return false;
   }
   return true;
 };

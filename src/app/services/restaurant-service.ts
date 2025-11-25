@@ -7,9 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providedIn: 'root'
 })
 export class RestaurantService {
-  aleatorio = Math.random();
   authService = inject(AuthService);
-  route = inject(ActivatedRoute);
   router = inject(Router);
   // base URL for user-related endpoints (no trailing space)
   readonly URL_BASE = "https://w370351.ferozo.com/api/users";
@@ -108,7 +106,6 @@ export class RestaurantService {
     );
   }
 
-  /** Update the restaurant/user name on the server. Returns the updated user object or null on failure */
   async updateRestaurantName(newName: string) {
     const userId = this.getUserId();
     if (!userId) return null;
@@ -131,7 +128,6 @@ export class RestaurantService {
       }
 
       const updated = await res.json();
-      // update local cache if needed
       if (this.restaurants && Array.isArray(this.restaurants)) {
         this.restaurants = this.restaurants.map(r => r.id === updated.id ? updated : r as Users);
       }

@@ -4,9 +4,7 @@ import { Home } from './pages/home/home';
 import { RegisterPage } from './pages/register-page/register-page';
 import { onlyPublicUserGuard } from './components/guards/only-public-user-guard';
 import { onlyLoggedUserGuard } from './components/guards/only-logged-user-guard';
-import { redirectToHomeLogged } from './components/guards/redirect-to-home-logged';
 import { LoggedLayout } from './components/logged-layout/logged-layout';
-import { HomeLogged } from './pages/home-logged/home-logged';
 import { AdminPage } from './pages/admin-page/admin-page';
 import { NewEditCategory } from './components/new-edit-category/new-edit-category';
 import { SettingsPage } from './pages/settings-page/settings-page';
@@ -35,11 +33,13 @@ export const routes: Routes = [
             },
             {
                 path: "admin-page/:id",
-                component: AdminPage
+                component: AdminPage,
+                canActivate: [onlyLoggedUserGuard]
             },
             {
                 path: "settings-page/:id",
-                component: SettingsPage
+                component: SettingsPage,
+                canActivate: [onlyLoggedUserGuard]
             },
             {
                 path: "new-category",
@@ -55,11 +55,13 @@ export const routes: Routes = [
             },
             {
                 path: "edit-product/:id",
-                component: NewEditProduct
+                component: NewEditProduct,
+                canActivate: [onlyLoggedUserGuard]
             },
             {
                 path: "new-product",
-                component: NewEditProduct
+                component: NewEditProduct,
+                canActivate: [onlyLoggedUserGuard]
             },
         ]
     },

@@ -103,7 +103,6 @@ export class CategoriesService {
 
   /** Borra una categoria */
   async deleteCategory(id: number | string) {
-    this.categories
     const res = await fetch(this.URL_BASE + "/api/categories/" + id,
       {
         method: "DELETE",

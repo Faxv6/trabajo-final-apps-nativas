@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { NewProduct, Products } from '../interfaces/products';
 import { AuthService } from './auth-service';
-import { RestaurantService } from './restaurant-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +9,6 @@ import { RestaurantService } from './restaurant-service';
 export class ProductsService {
 
   readonly URL_BASE = "https://w370351.ferozo.com";
-
-  restaurantService = inject(RestaurantService)
   authService = inject(AuthService)
 
   products: Products[] = []
@@ -69,77 +66,78 @@ export class ProductsService {
   }
 
   async createProduct(nuevoProducto: NewProduct): Promise<Products | undefined> {
-    try{
-    const res = await fetch(this.URL_BASE + "/api/products",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.authService.token,
-        },
-        body: JSON.stringify(nuevoProducto)
-      });
-    if (!res.ok) {
-      if (res.status === 401 || res.status === 403) this.showTokenExpired(res.status)
-      return;
-    }
-    const resProduct: Products = await res.json();
-    this.products.push(resProduct);
-    return resProduct;
+    try {
+      const res = await fetch(this.URL_BASE + "/api/products",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.authService.token,
+          },
+          body: JSON.stringify(nuevoProducto)
+        });
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) this.showTokenExpired(res.status)
+        return;
+      }
+      const resProduct: Products = await res.json();
+      this.products.push(resProduct);
+      return resProduct;
 
-  } catch (error) {
+    } catch (error) {
       console.error("Error creando producto:", error);
       return undefined;
     }
-  } 
+  }
 
   async editProduct(productoditado: Products): Promise<Products | undefined> {
     try {
-    const res = await fetch(this.URL_BASE + "/api/products/" + productoditado.id,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.authService.token,
-        },
-        body: JSON.stringify(productoditado)
+      const res = await fetch(this.URL_BASE + "/api/products/" + productoditado.id,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.authService.token,
+          },
+          body: JSON.stringify(productoditado)
+        });
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) this.showTokenExpired(res.status)
+        return;
+      }
+      /** Edita la lista actual de categorias reemplazando sólamente la que editamos */
+      this.products = this.products.map(product => {
+        if (product.id === productoditado.id) {
+          return productoditado;
+        };
+        return product;
       });
-    if (!res.ok) {
-      if (res.status === 401 || res.status === 403) this.showTokenExpired(res.status)
-      return;
-    }
-    /** Edita la lista actual de categorias reemplazando sólamente la que editamos */
-    this.products = this.products.map(product => {
-      if (product.id === productoditado.id) {
-        return productoditado;
-      };
-      return product;
-    });
 
-    return productoditado;
+      return productoditado;
 
-  } catch (error) {
+    } catch (error) {
       console.error("Error editando producto:", error);
       return undefined;
     }
   }
 
   async deleteProduct(id: number | string): Promise<boolean> {
-    try{
-    const res = await fetch(this.URL_BASE + "/api/products/" + id,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + this.authService.token,
-        },
-      });
-      if(!res.ok) return false;
-        
+    try {
+      const res = await fetch(this.URL_BASE + "/api/products/" + id,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + this.authService.token,
+          },
+        });
+      if (!res.ok) return false;
+
       this.products = this.products.filter(product => product.id !== id);
       return true;
 
-  } catch (error) {
+    } catch (error) {
       console.error("Error eliminando producto:", error);
       return false;
     }
-  }}
+  }
+}

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RestaurantService } from '../../services/restaurant-service';
 import { AuthService } from '../../services/auth-service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings-page',
@@ -17,6 +18,7 @@ export class SettingsPage {
   successMessage: string | null = null
   restaurantService = inject(RestaurantService)
   authService = inject(AuthService)
+  router = inject(Router)
   id: string | null = this.restaurantService.getUserId()
 
   async changeName() {
@@ -50,6 +52,7 @@ export class SettingsPage {
       if (result.isDenied) {
         this.restaurantService.deleteRestaurant(id)
         Swal.fire("Restaurante eliminado");
+        this.router.navigate(['/login'])
       }
     });
   }
