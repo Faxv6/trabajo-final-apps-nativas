@@ -4,13 +4,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CategoriesService } from '../../services/categories-service';
 import { NewCategory } from '../../interfaces/category';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Spinner } from '../spinner/spinner';
 import { RestaurantService } from '../../services/restaurant-service';
-import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-new-edit-category',
-  imports: [CommonModule, FormsModule, Spinner, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './new-edit-category.html',
   styleUrl: './new-edit-category.scss',
 })

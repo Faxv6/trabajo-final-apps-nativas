@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { NewUser, Users } from '../interfaces/users';
 import { AuthService } from './auth-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -57,63 +58,50 @@ export class RestaurantService {
     return resRestaurant;
   }
 
-  decodeToken(): Record<string, any> | null {
+  decodeToken() {
     const token = this.authService.token;
     if (!token) return null;
+    return jwtDecode(token);
 
-    try {
-      const parts = token.split('.');
-      if (parts.length < 2) return null;
-      const payload = parts[1];
-      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
-      const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
-      const json = atob(padded);
-      return JSON.parse(decodeURIComponent(json.split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join('')));
-    } catch (err) {
-      console.error('decodeToken failed', err);
-      return null;
-    }
   }
 
-  /**
-   * Devuelve las claims (payload) del token actual. Alias de decodeToken para claridad.
-   */
-  getTokenClaims(): Record<string, any> | null {
+  /** Devuelve las claims (payload) del token actual.*/
+  getTokenClaims() {
     return this.decodeToken();
   }
 
   /** Devuelve el id del usuario según las claims del token (sub | id | userId). */
-  getUserId(): string | null {
+  getUserId() {
     const claims = this.getTokenClaims();
-    if (!claims) return null;
-    return (claims['sub'] ?? claims['id'] ?? claims['userId'] ?? null) as string | null;
+    if (!claims) return '';
+    const c = claims as any;
+    return (c['sub']) as string;
   }
 
   /** Devuelve el nombre del restaurante / usuario según las claims más comunes. */
-  getRestaurantName(): string | null {
+  getRestaurantName(): string {
     const claims = this.getTokenClaims();
-    if (!claims) return null;
-    return (claims['restaurantName'] ?? claims['name'] ?? claims['unique_name'] ?? claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ?? null) as string | null;
+    if (!claims) return '';
+    const c = claims as any;
+    return (c['restaurantName'] ?? c['name']) as string;
   }
+
   async register(registerData: NewUser) {
     return await fetch("https://w370351.ferozo.com/api/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerData)
-    }
-    );
+    });
   }
 
   async updateRestaurantName(newName: string) {
     const userId = this.getUserId();
-    if (!userId) return null;
+    if (!userId) return '';
     try {
       const current = await this.getRestaurantById(userId);
-      const payload = current ? { ...current, restaurantName: newName } : { restaurantName: newName };
+      const payload = current ? { ...current, restaurantName: newName } : null;
 
-      const res = await fetch(`${this.URL_BASE}/${userId}`, {
+      const res = await fetch(this.URL_BASE + "/" + userId, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +112,7 @@ export class RestaurantService {
 
       if (!res.ok) {
         console.error('Failed to update restaurant name', res.status, await res.text());
-        return null;
+        return '';
       }
 
       const updated = await res.json();
@@ -134,7 +122,7 @@ export class RestaurantService {
       return updated;
     } catch (err) {
       console.error('updateRestaurantName failed', err);
-      return null;
+      return '';
     }
   }
 
@@ -146,8 +134,9 @@ export class RestaurantService {
           Authorization: "Bearer " + this.authService.token,
         },
       });
-    if (!res.ok) return;
+    if (!res.ok) return false;
     this.restaurants = this.restaurants.filter(restaurant => restaurant.id !== id);
+    this.router.navigate(['']);
     return true;
   }
 }

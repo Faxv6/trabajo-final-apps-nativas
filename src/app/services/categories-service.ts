@@ -1,7 +1,6 @@
-import { inject, Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Category, NewCategory } from '../interfaces/category';
 import { AuthService } from './auth-service';
-import { RestaurantService } from './restaurant-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,27 +9,12 @@ export class CategoriesService {
   readonly URL_BASE = "https://w370351.ferozo.com";
   authService = inject(AuthService)
   categories: Category[] = []
-  restaurantService = inject(RestaurantService)
 
-  /** If the server indicates the token is invalid/expired, show a swal (if available) and logout */
   private showTokenExpired(status?: number) {
     const isAuthError = status === 401 || status === 403
     if (!isAuthError) return
-
-    const swal = (window as any).Swal
-    const msg = 'Tu sesión expiró. Por favor inicia sesión de nuevo.'
-    if (swal && typeof swal.fire === 'function') {
-      swal.fire({
-        icon: 'warning',
-        title: 'Sesión expirada',
-        text: msg,
-        confirmButtonText: 'Ir al login'
-      }).then(() => this.authService.logout())
-    } else {
-      // fallback
-      alert(msg)
-      this.authService.logout()
-    }
+    alert('Tu sesión expiró. Por favor inicia sesión de nuevo.')
+    this.authService.logout()
   }
 
   async getCategories(id: string | number) {
@@ -44,7 +28,6 @@ export class CategoriesService {
       )
       if (!res.ok) {
         console.error('Failed to load categories', res.status, res.statusText)
-        // if auth error, notify and logout
         if (res.status === 401 || res.status === 403) this.showTokenExpired(res.status)
         this.categories = [];
       }

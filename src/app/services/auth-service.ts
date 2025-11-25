@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 /**
  * Este service se encarga del login, de tener el token y de deslogear
@@ -48,15 +49,14 @@ export class AuthService {
   revisionToken() {
     return setInterval(() => {
       if (this.token) {
-        const base64Url = this.token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        const claims: { exp: number } = JSON.parse(jsonPayload);
-        if (new Date(claims.exp * 1000) < new Date()) {
-          this.logout()
+        try {
+          const claims: { exp: number } = jwtDecode(this.token);
+          if (new Date(claims.exp * 1000) < new Date()) {
+            this.logout();
+          }
+        } catch (e) {
+          console.error('Error checking token expiration', e);
+          this.logout();
         }
       }
     }, 1000 * 60 * 10)

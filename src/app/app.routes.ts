@@ -43,11 +43,13 @@ export const routes: Routes = [
             },
             {
                 path: "new-category",
-                component: NewEditCategory
+                component: NewEditCategory,
+                canActivate: [onlyLoggedUserGuard]
             },
             {
                 path: "edit-category/:id",
-                component: NewEditCategory
+                component: NewEditCategory,
+                canActivate: [onlyLoggedUserGuard]
             },
             {
                 path: "restaurant/:id",

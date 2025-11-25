@@ -36,9 +36,8 @@ export class SettingsPage {
       this.authService.logout()
     } catch (err) {
       console.error(err)
-    } finally {
-      this.isLoading = false
     }
+    this.isLoading = false
   }
   deleteRestaurantModal(id: string | number) {
     Swal.fire({

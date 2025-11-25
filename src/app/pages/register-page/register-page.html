@@ -1,20 +1,20 @@
 <div class="bg-mcdonalds-light d-flex align-items-center justify-content-center py-5">
-  
+
   <div class="card border-0 shadow-lg rounded-4 animate-slide-up" style="width: 100%; max-width: 480px;">
     <div class="card-body p-4 p-md-5">
 
       <div class="text-center mb-4">
         <div class="brand-icon-box mx-auto mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.708V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
+            <path
+              d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.708V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
           </svg>
         </div>
         <h1 class="fw-bold mb-1 text-brand-gradient">Crear Cuenta</h1>
-        <p class="text-muted small">Únete a nuestra comunidad gastronómica</p>
       </div>
 
       <form (ngSubmit)="register(registerForm.form.value)" #registerForm="ngForm">
-        
+
         <div class="mb-3">
           <label for="firstName" class="form-label fw-semibold small text-secondary ps-1">Nombre</label>
           <div class="input-group input-group-seamless">
@@ -40,7 +40,8 @@
             <span class="input-group-text pe-0">
               <i class="bi bi-shop fs-5"></i>
             </span>
-            <input type="text" class="form-control" id="restaurantName" name="restaurantName" placeholder="Mi Restaurante" ngModel required>
+            <input type="text" class="form-control" id="restaurantName" name="restaurantName"
+              placeholder="Mi Restaurante" ngModel required>
           </div>
         </div>
 
@@ -50,7 +51,8 @@
             <span class="input-group-text pe-0">
               <i class="bi bi-geo-alt fs-5"></i>
             </span>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Av. Principal 123" ngModel required>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Av. Principal 123" ngModel
+              required>
           </div>
         </div>
 
@@ -60,7 +62,8 @@
             <span class="input-group-text pe-0">
               <i class="bi bi-telephone fs-5"></i>
             </span>
-            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="11 1234 5678" ngModel required>
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="11 1234 5678"
+              ngModel required>
           </div>
         </div>
 
@@ -70,7 +73,8 @@
             <span class="input-group-text pe-0">
               <i class="bi bi-lock fs-5"></i>
             </span>
-            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" ngModel required>
+            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" ngModel
+              required>
           </div>
         </div>
 
@@ -80,23 +84,24 @@
             <span class="input-group-text pe-0">
               <i class="bi bi-lock-fill fs-5"></i>
             </span>
-            <input type="password" class="form-control" id="password2" name="password2" placeholder="••••••••" ngModel required>
+            <input type="password" class="form-control" id="password2" name="password2" placeholder="••••••••" ngModel
+              required>
           </div>
         </div>
 
         @if (errorRegister) {
-          <div class="alert alert-danger d-flex align-items-center py-2 mb-3 rounded-3 small" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <div>Verifica los datos y que las contraseñas coincidan.</div>
-          </div>
+        <div class="alert alert-danger d-flex align-items-center py-2 mb-3 rounded-3 small" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <div>Verifica los datos y que las contraseñas coincidan.</div>
+        </div>
         }
 
         <button type="submit" class="btn btn-brand w-100 py-3 rounded-4 fw-bold shadow-sm" [disabled]="isLoading">
           @if (isLoading) {
-            <span class="spinner-border spinner-border-sm me-2"></span>
-            Creando...
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Creando...
           } @else {
-            Crear cuenta <i class="bi bi-arrow-right ms-2"></i>
+          Crear cuenta <i class="bi bi-arrow-right ms-2"></i>
           }
         </button>
 

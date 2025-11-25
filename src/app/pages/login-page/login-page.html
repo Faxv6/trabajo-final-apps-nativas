@@ -1,37 +1,31 @@
 <div class="bg-mcdonalds-light d-flex align-items-center justify-content-center py-5">
-  
+
   <div class="card border-0 shadow-lg rounded-4 animate-slide-up" style="width: 100%; max-width: 480px;">
     <div class="card-body p-4 p-md-5">
 
       <div class="text-center mb-4">
         <img src="/Logo_TP_FINAL.png" alt="Logo" class="mb-3" style="width: 150px; height: auto;">
-        
+
         <h1 class="fw-bold mb-1 text-brand-gradient">Bienvenido de nuevo</h1>
         <p class="text-muted small">Inicia sesión en tu cuenta</p>
       </div>
 
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-        
+
         <div class="mb-3">
-          <label for="restaurantName" class="form-label fw-semibold small text-secondary ps-1">Nombre del restaurante</label>
+          <label for="restaurantName" class="form-label fw-semibold small text-secondary ps-1">Nombre del
+            restaurante</label>
           <div class="input-group input-group-seamless">
             <span class="input-group-text pe-0">
               <i class="bi bi-shop fs-5"></i>
             </span>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="restaurantName" 
-              name="restaurantName" 
-              ngModel 
-              #restaurantName="ngModel" 
-              required 
-              autocomplete="restaurantName">
+            <input type="text" class="form-control" id="restaurantName" name="restaurantName" ngModel
+              #restaurantName="ngModel" required autocomplete="restaurantName">
           </div>
           @if (restaurantName.invalid && !restaurantName.pristine) {
-            <div class="text-danger small mt-1 ps-1">
-              <i class="bi bi-exclamation-circle me-1"></i> Debe colocar un nombre válido.
-            </div>
+          <div class="text-danger small mt-1 ps-1">
+            <i class="bi bi-exclamation-circle me-1"></i> Debe colocar un nombre válido.
+          </div>
           }
         </div>
 
@@ -41,51 +35,42 @@
             <span class="input-group-text pe-0">
               <i class="bi bi-key fs-5"></i>
             </span>
-            <input 
-              [type]="showPassword ? 'text' : 'password'" 
-              class="form-control" 
-              id="password" 
-              name="password" 
-              placeholder="••••••••" 
-              ngModel 
-              #password="ngModel" 
-              minlength="4" 
-              required 
-              autocomplete="current-password">
-            
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password"
+              placeholder="••••••••" ngModel #password="ngModel" minlength="4" required autocomplete="current-password">
+
             <button type="button" class="btn btn-toggle pe-3" (click)="togglePasswordVisibility()">
               <i class="bi" [class.bi-eye]="showPassword" [class.bi-eye-slash]="!showPassword"></i>
             </button>
           </div>
-          
+
           @if (password.invalid && !password.pristine) {
-            <div class="text-danger small mt-1 ps-1">
-              <i class="bi bi-exclamation-circle me-1"></i> Mínimo 4 caracteres.
-            </div>
+          <div class="text-danger small mt-1 ps-1">
+            <i class="bi bi-exclamation-circle me-1"></i> Mínimo 4 caracteres.
+          </div>
           }
         </div>
 
         @if (errorLogin) {
-          <div class="alert alert-danger d-flex align-items-center py-2 mb-3 rounded-3 small" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <div>Datos de sesión incorrectos, intente nuevamente.</div>
-          </div>
+        <div class="alert alert-danger d-flex align-items-center py-2 mb-3 rounded-3 small" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <div>Datos de sesión incorrectos, intente nuevamente.</div>
+        </div>
         }
 
         <button type="submit" class="btn btn-brand w-100 py-3 rounded-4 fw-bold shadow-sm mb-3" [disabled]="isLoading">
           @if (isLoading) {
-            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-            Cargando...
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          Cargando...
           } @else {
-            Iniciar sesión <i class="bi bi-box-arrow-in-right ms-2"></i>
+          Iniciar sesión <i class="bi bi-box-arrow-in-right ms-2"></i>
           }
         </button>
 
       </form>
 
       <a routerLink="" class="btn btn-outline-secondary w-100 py-2 rounded-4 fw-semibold border-2 mb-4">
-         Entrar como invitado
-       </a>
+        Entrar como invitado
+      </a>
 
       <div class="text-center pt-3 border-top">
         <p class="text-muted small mb-0">

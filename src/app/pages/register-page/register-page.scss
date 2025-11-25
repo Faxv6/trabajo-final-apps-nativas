@@ -1,61 +1,58 @@
-// Variables de Marca
 $mcdonalds-red: #DA291C;
 $mcdonalds-yellow: #FFC72C;
 $mcdonalds-dark: #27251F;
 
-/* 1. Fondo y Contenedor */
 .bg-mcdonalds-light {
   background-color: #f8f9fa;
   min-height: 100vh;
 }
 
-/* 2. Animación de entrada (Esto Bootstrap no lo tiene nativo) */
 .animate-slide-up {
   animation: slideUp 0.5s ease-out forwards;
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 3. Inputs Modernos "Seamless" (Icono + Input unidos) */
 .input-group-seamless {
   border: 1px solid #dee2e6;
-  border-radius: 0.75rem; /* rounded-3 equivalent */
+  border-radius: 0.75rem;
   overflow: hidden;
   transition: all 0.2s ease-in-out;
   background-color: white;
 
-  /* El icono dentro del grupo */
   .input-group-text {
     background-color: transparent;
     border: none;
     color: #6c757d;
   }
 
-  /* El input real */
   .form-control {
     border: none;
-    box-shadow: none; /* Quitamos el foco azul default */
+    box-shadow: none;
   }
 
-  /* Efecto Focus al grupo completo */
   &:focus-within {
     border-color: $mcdonalds-red;
     box-shadow: 0 0 0 0.25rem rgba($mcdonalds-red, 0.15);
-    
+
     .input-group-text {
       color: $mcdonalds-red;
     }
   }
 }
 
-/* 4. Botones y Marca */
 .text-brand-gradient {
   background: linear-gradient(135deg, $mcdonalds-red 0%, $mcdonalds-yellow 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .btn-brand {
@@ -63,7 +60,7 @@ $mcdonalds-dark: #27251F;
   border: none;
   color: white;
   transition: transform 0.2s;
-  
+
   &:hover:not(:disabled) {
     background-color: darken($mcdonalds-red, 5%);
     transform: translateY(-2px);

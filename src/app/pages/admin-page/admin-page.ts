@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant-service';
 import { CategoriesService } from '../../services/categories-service';
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { ActivatedRoute, RouterLink, Router } from "@angular/router";
 import Swal from 'sweetalert2';
 import { Category } from '../../interfaces/category';
 import { ProductsService } from '../../services/products-service';
@@ -21,6 +21,7 @@ export class AdminPage implements OnInit {
   products: Products | undefined
 
   route = inject(ActivatedRoute)
+  router = inject(Router)
   category: Category | undefined
 
   async ngOnInit() {
@@ -62,5 +63,24 @@ export class AdminPage implements OnInit {
         Swal.fire("Prodcto eliminado");
       }
     });
+  }
+
+  createProduct() {
+    if (this.categoriesService.categories.length === 0) {
+      Swal.fire({
+        title: "No tienes categorías creadas",
+        text: "¿Queres crear una categoría?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, crear categoría",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/new-category']);
+        }
+      });
+    } else {
+      this.router.navigate(['/new-product']);
+    }
   }
 }

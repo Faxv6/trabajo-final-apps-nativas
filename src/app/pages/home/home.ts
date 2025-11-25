@@ -15,10 +15,21 @@ export class Home implements OnInit {
   restaurantService = inject(RestaurantService)
   categoriesService = inject(CategoriesService)
 
+  featuredRestaurants: Users[] = [];
 
-  
-  ngOnInit(): void {
-    this.restaurantService.getRestaurants();
+  async ngOnInit(): Promise<void> {
+    await this.restaurantService.getRestaurants();
+    this.selectRandomFeaturedRestaurants();
+  }
+
+  selectRandomFeaturedRestaurants() {
+    const allRestaurants = [...this.restaurantService.restaurants];
+    for (let i = allRestaurants.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allRestaurants[i], allRestaurants[j]] = [allRestaurants[j], allRestaurants[i]];
+    }
+    // Toma los primeros 5 (o menos si hay menos de 5)
+    this.featuredRestaurants = allRestaurants.slice(0, 5);
   }
 
   currentCarouselIndex = 0;
@@ -26,14 +37,15 @@ export class Home implements OnInit {
   categories = [];
 
   nextSlide() {
-    this.currentCarouselIndex = (this.currentCarouselIndex + 1) % this.restaurantService.restaurants.length;
+    if (this.featuredRestaurants.length === 0) return;
+    this.currentCarouselIndex = (this.currentCarouselIndex + 1) % this.featuredRestaurants.length;
   }
 
   prevSlide() {
+    if (this.featuredRestaurants.length === 0) return;
     this.currentCarouselIndex = this.currentCarouselIndex === 0
-      ? this.restaurantService.restaurants.length - 1
+      ? this.featuredRestaurants.length - 1
       : this.currentCarouselIndex - 1;
   }
-
   // Los restaurantes se consultan directamente desde restaurantService.restaurants
 }

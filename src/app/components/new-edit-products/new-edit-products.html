@@ -14,7 +14,7 @@
                 <input id="product-name" name="name" type="text" class="form-control" [(ngModel)]="name" required
                     minlength="2" maxlength="50" #nameCtrl="ngModel" [disabled]="isLoading"
                     placeholder="Ej: Hamburguesa Clásica">
-                
+
                 @if (nameCtrl.dirty && nameCtrl.invalid) {
                 <div class="text-danger small mt-1">
                     @if (nameCtrl.errors?.['required']) { <p class="mb-0">El nombre es obligatorio</p> }
@@ -106,7 +106,6 @@
 
                 <button type="submit" class="btn btn-primary" [disabled]="newProductForm.invalid || isLoading">
                     @if (isLoading) {
-                    <app-spinner class="me-2"></app-spinner>
                     <span>{{ isEditMode ? 'Guardando...' : 'Creando...' }}</span>
                     } @else {
                     <span>{{ isEditMode ? 'Actualizar producto' : 'Crear producto' }}</span>

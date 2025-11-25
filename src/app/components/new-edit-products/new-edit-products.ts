@@ -1,18 +1,16 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ProductsService } from '../../services/products-service';
 import { NewProduct } from '../../interfaces/products';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Spinner } from '../spinner/spinner';
 import { RestaurantService } from '../../services/restaurant-service';
-import { InvokeFunctionExpr } from '@angular/compiler';
 import { CategoriesService } from '../../services/categories-service';
 
 @Component({
   selector: 'app-new-edit-product',
   standalone: true, // Asumo que es standalone por los imports
-  imports: [CommonModule, FormsModule, Spinner, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './new-edit-products.html', // Asegúrate que coincida el nombre
   styleUrl: './new-edit-products.scss',
 })
@@ -40,8 +38,8 @@ export class NewEditProduct {
   categoryName: string = '';
   featured: boolean = false;
 
-  selectedLabels: string[] = []; // Array para los checkboxes
-  recommendedFor: number | null = null; // Número para la API
+  selectedLabels: string[] = [];
+  recommendedFor: number | null = null;
   discount: number | null = null;
   hasHappyHour: boolean = false;
 
@@ -53,7 +51,7 @@ export class NewEditProduct {
 
     if (this.idproduct) {
       this.isEditMode = true;
-      this.isLoading = true;
+      this.isLoading = false;
 
 
       const products = await this.productsService.getProducts(this.userId!);
@@ -130,8 +128,8 @@ export class NewEditProduct {
       }
     } catch (e) {
       console.error("Error enviando formulario:", e);
-    } finally {
-      this.isLoading = false;
     }
+    this.isLoading = false;
+
   }
 }

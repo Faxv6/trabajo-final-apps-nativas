@@ -16,24 +16,12 @@ export class ProductsService {
   private showTokenExpired(status?: number) {
     const isAuthError = status === 401 || status === 403
     if (!isAuthError) return
+    alert('Tu sesión expiró. Por favor inicia sesión de nuevo.')
+    this.authService.logout()
 
-    const swal = (window as any).Swal
-    const msg = 'Tu sesión expiró. Por favor inicia sesión de nuevo.'
-    if (swal && typeof swal.fire === 'function') {
-      swal.fire({
-        icon: 'warning',
-        title: 'Sesión expirada',
-        text: msg,
-        confirmButtonText: 'Ir al login'
-      }).then(() => this.authService.logout())
-    } else {
-      // fallback
-      alert(msg)
-      this.authService.logout()
-    }
   }
 
-  async getProducts(id: string | number): Promise<Products[]> {
+  async getProducts(id: string | number) {
     try {
       const res = await fetch(this.URL_BASE + "/api/users/" + id + "/products",
         {
@@ -61,11 +49,11 @@ export class ProductsService {
   }
 
 
-  getProductById(id: number | string): Products | undefined {
+  getProductById(id: number | string) {
     return this.products.find(p => p.id == id);
   }
 
-  async createProduct(nuevoProducto: NewProduct): Promise<Products | undefined> {
+  async createProduct(nuevoProducto: NewProduct) {
     try {
       const res = await fetch(this.URL_BASE + "/api/products",
         {
@@ -90,7 +78,7 @@ export class ProductsService {
     }
   }
 
-  async editProduct(productoditado: Products): Promise<Products | undefined> {
+  async editProduct(productoditado: Products) {
     try {
       const res = await fetch(this.URL_BASE + "/api/products/" + productoditado.id,
         {
@@ -117,11 +105,11 @@ export class ProductsService {
 
     } catch (error) {
       console.error("Error editando producto:", error);
-      return undefined;
+      return;
     }
   }
 
-  async deleteProduct(id: number | string): Promise<boolean> {
+  async deleteProduct(id: number | string) {
     try {
       const res = await fetch(this.URL_BASE + "/api/products/" + id,
         {
