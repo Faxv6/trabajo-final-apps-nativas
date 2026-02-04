@@ -50,10 +50,11 @@ export class RestaurantPage implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    // obtener el ID del restaurante desde la URL
     this.userId = this.route.snapshot.paramMap.get('id');
     if (!this.userId) {
       return;
-    }
+    } 
 
     try {
       const [restaurant, categories, products] = await Promise.all([
@@ -81,6 +82,7 @@ export class RestaurantPage implements OnInit {
       this.menu = [];
       return;
     }
+    // .map para crear secciones del menú por categoría
     this.menu = this.categories.map(category => {
       return {
         category: category,

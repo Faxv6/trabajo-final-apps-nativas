@@ -47,6 +47,7 @@ export class RegisterPage {
     const res = await this.user.register(userData);
     this.isLoading = false;
     
+    // res.ok devuelve true si el codigo de estado HTTP (respuesta del servidor) es 2xx
     if (res.ok) {
       this.router.navigate(["/login"]);
     } else {

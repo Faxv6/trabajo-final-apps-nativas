@@ -34,10 +34,10 @@ export class RestaurantService {
         this.restaurants = [];
         return [];
       }
-
       const resJson: Users[] = await res.json();
       this.restaurants = resJson || [];
       return this.restaurants;
+
     } catch (err) {
       console.error('getRestaurants failed', err);
       this.restaurants = [];
@@ -45,7 +45,7 @@ export class RestaurantService {
     }
   }
 
-  /** Devuelve un contato en particular segun su ID */
+  /** Devuelve un contacto en particular segun su ID */
   async getRestaurantById(id: string | number) {
     const res = await fetch(this.URL_BASE + "/" + id,
       {
@@ -53,9 +53,12 @@ export class RestaurantService {
           Authorization: "Bearer " + this.authService.token,
         },
       });
+
     if (!res.ok) return;
+
     const resRestaurant: Users = await res.json();
     return resRestaurant;
+    
   }
 
   decodeToken() {

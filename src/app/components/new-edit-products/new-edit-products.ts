@@ -12,7 +12,7 @@ import { CategoriesService } from '../../services/categories-service';
   standalone: true, // Asumo que es standalone por los imports
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './new-edit-products.html', // Asegúrate que coincida el nombre
-  styleUrl: './new-edit-products.scss',
+  styleUrl: './new-edit-products.scss', 
 })
 export class NewEditProduct {
   productsService = inject(ProductsService);

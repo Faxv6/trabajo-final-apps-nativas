@@ -48,6 +48,7 @@
           Todos
         </button>
 
+        <!--Categorias y filtrado (botones) -->
         @for (section of menu; track section.category.id) {
         <button class="btn btn-sm rounded-pill text-nowrap"
           [class.btn-dark]="selectedCategoryId === section.category.id"
@@ -60,7 +61,7 @@
       }
 
       <div class="menu-container">
-
+        <!-- Secciones DENTRO del menú-->
         @for (section of filteredMenu; track section.category.id) {
         <div class="mb-4">
           <h5 class="border-bottom pb-2 mb-3 text-primary fw-bold text-uppercase">
@@ -75,7 +76,7 @@
               <div class="me-3">
                 <div class="d-flex align-items-center gap-2">
                   <h6 class="mb-1 fw-bold">{{ product.name }}</h6>
-                  <!-- Badges para resaltar según destacado y hh -->
+                  <!-- Badges para resaltar según destacado y happy hour -->
                   @if(product.featured) { <span class="badge bg-warning text-dark"
                     style="font-size: 0.6rem;">Destacado</span> }
                   @if(product.hasHappyHour) { <span class="badge bg-info text-dark" style="font-size: 0.6rem;">Happy

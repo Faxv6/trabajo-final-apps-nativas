@@ -23,6 +23,7 @@ export class Home implements OnInit {
   }
 
   selectRandomFeaturedRestaurants() {
+    //Copia el array para no modificar el original
     const allRestaurants = [...this.restaurantService.restaurants];
     for (let i = allRestaurants.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

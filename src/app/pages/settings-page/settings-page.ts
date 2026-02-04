@@ -28,6 +28,7 @@ export class SettingsPage {
       const updated = await this.restaurantService.updateRestaurantName(this.name)
       const swal = (window as any).Swal
       if (!updated) {
+        this.isLoading = false
         if (swal && typeof swal.fire === 'function') {
           await swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo actualizar el nombre. Intenta nuevamente.' })
         }

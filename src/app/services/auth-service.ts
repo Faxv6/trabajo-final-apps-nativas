@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
 /**
- * Este service se encarga del login, de tener el token y de deslogear
+ * Este service se encarga del login, de tener el token y de desloguear
  * Siempre que se necesite el token hay que llamar a getToken().
  */
 @Injectable({
@@ -25,10 +25,12 @@ export class AuthService {
       }
     );
     if (res.ok) {
+// ().token hace q se extraiga el token del json devuelto    
       this.token = (await res.json()).token as string;
       localStorage.setItem("token", this.token);
       this.router.navigate([""])
     }
+    return false;
   }
 
   logout() {
@@ -41,6 +43,7 @@ export class AuthService {
     return this.token;
   }
 
+  /** !! este operador convierte el token a bool*/
   isLoggedIn() {
     return !!this.token;
   }

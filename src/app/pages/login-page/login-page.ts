@@ -19,7 +19,7 @@ export class LoginPage {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-  }
+  } 
 
   async login(form: any) {
     this.errorLogin = false;
@@ -28,7 +28,10 @@ export class LoginPage {
       return;
     }
     this.isLoading = true;
-    await this.authService.login(form.value);
+    const loginResult = await this.authService.login(form.value);
+    if (!loginResult) {
+      this.errorLogin = true;
+    }
     this.isLoading = false;
   }
 }
